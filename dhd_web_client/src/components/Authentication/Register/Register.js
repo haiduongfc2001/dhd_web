@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {
     MDBBtn,
@@ -7,13 +7,13 @@ import {
     MDBCol,
     MDBCard,
     MDBCardBody,
-    MDBInput, MDBCheckbox,
+    MDBInput, MDBRadio,
 }
     from 'mdb-react-ui-kit';
 import classNames from "classnames/bind";
 import styles from "../Authentication.module.scss";
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles)
 
@@ -48,7 +48,7 @@ function Register() {
                 <MDBRow className='d-flex justify-content-center align-items-center h-100'>
                     <MDBCol col='12'>
                         <MDBCard className='bg-light text-black my-5 mx-auto'
-                                 style={{borderRadius: '1rem', maxWidth: '400px'}}>
+                            style={{ borderRadius: '1rem', maxWidth: '400px' }}>
                             <MDBCardBody className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
                                 {/*<h2 className="fw-bold mb-2 text-uppercase">Login</h2>*/}
                                 <img
@@ -120,7 +120,11 @@ function Register() {
 
 
                                 <div className='d-flex justify-content-center mb-4 mt-4'>
-                                    <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
+                                    <MDBRadio
+                                        name='flexCheck'
+                                        id='flexCheckDefault'
+                                        label='I have read and agree to the terms'
+                                    />
                                 </div>
 
                                 <MDBBtn
@@ -130,7 +134,9 @@ function Register() {
                                     style={{ backgroundColor: '#a69c9c' }}
                                     onClick={handleSubmit}
                                 >
-                                    Register
+                                    <span style={{ fontWeight: '500' }}>
+                                        Register
+                                    </span>
                                 </MDBBtn>
 
                                 <div>
