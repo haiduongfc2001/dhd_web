@@ -1,64 +1,66 @@
-import React, { useState } from 'react';
-import {
-    MDBContainer,
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane,
-    MDBBtn,
-    MDBInput,
-}
-    from 'mdb-react-ui-kit';
+import { useState } from 'react';
+import { Form, FloatingLabel } from 'react-bootstrap';
 
-function App() {
-
-    const [justifyActive, setJustifyActive] = useState('tab1');;
-
-    const handleJustifyClick = (value) => {
-        if (value === justifyActive) {
-            return;
-        }
-
-        setJustifyActive(value);
-    };
+function FormExample() {
 
     return (
-        <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-            <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
-                <MDBTabsItem>
-                    <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'}>
-                        Login
-                    </MDBTabsLink>
-                </MDBTabsItem>
-                <MDBTabsItem>
-                    <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
-                        Register
-                    </MDBTabsLink>
-                </MDBTabsItem>
-            </MDBTabs>
+                                <form>
 
-            <MDBTabsContent>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
+                                        <label class="form-label" for="form3Example1cg">Your Name</label>
+                                    </div>
 
-                <MDBTabsPane show={justifyActive === 'tab1'}>
-                    <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-                    <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
-                    <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
-                    <p className="text-center">Not a member? <a href="/register">Register</a></p>
+                                    <div class="form-outline mb-4">
+                                        <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                                        <label class="form-label" for="form3Example3cg">Your Email</label>
+                                    </div>
 
-                </MDBTabsPane>
+                                    {/* Inside your component */}
+                                    <Form.Group className="mb-4" controlId="form3Example4cg">
+                                        <Form.Floating>
+                                            <Form.Control type="password" id="form3Example4cg" className="form-control-lg" />
+                                            <Form.Label htmlFor="form3Example4cg">Password</Form.Label>
+                                        </Form.Floating>
+                                    </Form.Group>
 
-                <MDBTabsPane show={justifyActive === 'tab2'}>
-                    <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text'/>
-                    <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'/>
-                    <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email'/>
-                    <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password'/>
-                    <MDBBtn className="mb-4 w-100">Sign up</MDBBtn>
-                </MDBTabsPane>
-            </MDBTabsContent>
-        </MDBContainer>
+                                    <div class="form-outline mb-4">
+                                        <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                                        <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                                    </div>
+
+                                    <div class="form-check d-flex justify-content-center mb-5">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                                        <label class="form-check-label" for="form2Example3g">
+                                            I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                        </label>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                                    </div>
+
+                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
+                                        class="fw-bold text-body"><u>Login here</u></a></p>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
-export default App;
+export default FormExample;

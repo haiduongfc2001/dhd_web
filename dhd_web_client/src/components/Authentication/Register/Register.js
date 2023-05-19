@@ -61,83 +61,91 @@ function Register() {
                                 </p>
 
 
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label='Your name'
-                                    id='formControlLg'
-                                    type='text'
-                                    size='lg'
-                                    autoFocus
-                                    autoComplete='off'
-                                    value={name}
-                                    onChange={(event) => setName(event.target.value)}
-                                />
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label='Your UserName'
-                                    id='formControlLg'
-                                    autoComplete='off'
-                                    type='text'
-                                    size='lg'
-                                    value={username}
-                                    onChange={(event) => setUsername(event.target.value)}
-                                />
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label='Email address'
-                                    id='formControlLg'
-                                    type='email'
-                                    size='lg'
-                                    autoComplete='off'
-                                    value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
-                                />
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label='Password'
-                                    id='formControlLg'
-                                    type='password'
-                                    size='lg'
-                                    value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
-                                />
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label='Repeat Password'
-                                    id='formControlLg'
-                                    type='text'
-                                    size='lg'
-                                    value={repeatPassword}
-                                    onChange={(event) => setRepeatPassword(event.target.value)}
-                                />
-
-                                {error && <p className='text-danger'>{error}</p>}
-
-
-                                <div className='d-flex justify-content-center mb-4 mt-4'>
-                                    <MDBRadio
-                                        name='flexCheck'
-                                        id='flexCheckDefault'
-                                        label='I have read and agree to the terms'
+                                <form onSubmit={handleSubmit}>
+                                    <MDBInput
+                                        wrapperClass='mb-4 mx-5 w-100'
+                                        labelClass='text-black'
+                                        label='Your name'
+                                        id='formControlLg'
+                                        type='text'
+                                        size='lg'
+                                        autoFocus
+                                        autoComplete='off'
+                                        value={name}
+                                        required
+                                        onChange={(event) => setName(event.target.value)}
                                     />
-                                </div>
+                                    <MDBInput
+                                        wrapperClass='mb-4 mx-5 w-100'
+                                        labelClass='text-black'
+                                        label='Your UserName'
+                                        id='formControlLg'
+                                        autoComplete='off'
+                                        type='text'
+                                        size='lg'
+                                        value={username}
+                                        required
+                                        onChange={(event) => setUsername(event.target.value)}
+                                    />
+                                    <MDBInput
+                                        wrapperClass='mb-4 mx-5 w-100'
+                                        labelClass='text-black'
+                                        label='Email address'
+                                        id='formControlLg'
+                                        type='email'
+                                        size='lg'
+                                        autoComplete='off'
+                                        value={email}
+                                        required
+                                        onChange={(event) => setEmail(event.target.value)}
+                                    />
+                                    <MDBInput
+                                        wrapperClass='mb-4 mx-5 w-100'
+                                        labelClass='text-black'
+                                        label='Password'
+                                        id='formControlLg'
+                                        type='password'
+                                        size='lg'
+                                        value={password}
+                                        required
+                                        onChange={(event) => setPassword(event.target.value)}
+                                    />
+                                    <MDBInput
+                                        wrapperClass='mb-4 mx-5 w-100'
+                                        labelClass='text-black'
+                                        label='Repeat Password'
+                                        id='formControlLg'
+                                        type='text'
+                                        size='lg'
+                                        value={repeatPassword}
+                                        required
+                                        onChange={(event) => setRepeatPassword(event.target.value)}
+                                    />
 
-                                <MDBBtn
-                                    className='mx-2 px-5 text-black'
-                                    color='red'
-                                    size='lg'
-                                    style={{ backgroundColor: '#a69c9c' }}
-                                    onClick={handleSubmit}
-                                >
-                                    <span style={{ fontWeight: '500' }}>
-                                        Register
-                                    </span>
-                                </MDBBtn>
+                                    {error && <p className='text-danger'>{error}</p>}
+
+
+                                    <div className='d-flex justify-content-center mb-4 mt-4'>
+                                        <MDBRadio
+                                            name='flexCheck'
+                                            id='flexCheckDefault'
+                                            label='I have read and agree to the terms'
+                                        />
+                                    </div>
+
+                                    <MDBBtn
+                                        className='mx-2 px-5 text-black'
+                                        color='red'
+                                        size='lg'
+                                        style={{ backgroundColor: '#a69c9c' }}
+                                        type='submit'
+                                    // onClick={handleSubmit}
+                                    >
+                                        <span style={{ fontWeight: '500' }}>
+                                            Register
+                                        </span>
+                                    </MDBBtn>
+                                </form>
 
                                 <div>
                                     <p className="mb-0 mt-2">Have an account?
