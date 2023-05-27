@@ -1,66 +1,121 @@
-import { useState } from 'react';
-import { Form, FloatingLabel } from 'react-bootstrap';
+import React, {useState} from 'react';
+import axios from 'axios';
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,
+    MDBInput,
+}
+    from 'mdb-react-ui-kit';
+import {useNavigate} from "react-router-dom";
 
-function FormExample() {
+function Register() {
+
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        try {
+            const response = await axios.post('http://localhost:5000/user', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            setErrorMessage(response.data.message);
+            navigate('/');
+            setEmail('');
+            setPassword('');
+            setErrorMessage('');
+        } catch (error) {
+            setErrorMessage('Error registering user!');
+        }
+    };
+
+    const formRegisterArray = [
+        {
+            id: 'email',
+            type: 'email',
+            label: (
+                <>
+                    Your Email{" "}
+                    <span
+                        style={{color: "red"}}
+                        dangerouslySetInnerHTML={{__html: "*"}}
+                    />
+                </>
+            ),
+            value: email,
+            onChange: handleEmailChange,
+        },
+        {
+            id: 'password',
+            type: 'password',
+            label: (
+                <>
+                    Your Password{" "}
+                    <span
+                        style={{color: "red"}}
+                        dangerouslySetInnerHTML={{__html: "*"}}
+                    />
+                </>
+            ),
+            value: password,
+            onChange: handlePasswordChange,
+        },
+    ]
 
     return (
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card">
-                            <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+        <div>
+            <MDBContainer fluid>
+                <MDBRow>
+                    <MDBCol col='12'>
+                        <MDBCard>
+                            <MDBCardBody>
+                                {formRegisterArray.map((form, index) => (
+                                    <MDBInput
+                                        key={index}
+                                        required
+                                        type={form.type}
+                                        id={form.id}
+                                        label={form.label}
+                                        value={form.value}
+                                        onChange={form.onChange}
+                                    />
+                                ))}
 
-                                <form>
+                                {errorMessage && <p className={'text-danger'}>{errorMessage}</p> }
 
-                                    <div class="form-outline mb-4">
-                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
-                                        <label class="form-label" for="form3Example1cg">Your Name</label>
-                                    </div>
+                                <MDBBtn onClick={handleRegister}>
+                                    Register
+                                </MDBBtn>
+                            </MDBCardBody>
 
-                                    <div class="form-outline mb-4">
-                                        <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                                        <label class="form-label" for="form3Example3cg">Your Email</label>
-                                    </div>
-
-                                    {/* Inside your component */}
-                                    <Form.Group className="mb-4" controlId="form3Example4cg">
-                                        <Form.Floating>
-                                            <Form.Control type="password" id="form3Example4cg" className="form-control-lg" />
-                                            <Form.Label htmlFor="form3Example4cg">Password</Form.Label>
-                                        </Form.Floating>
-                                    </Form.Group>
-
-                                    <div class="form-outline mb-4">
-                                        <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
-                                        <label class="form-label" for="form3Example4cdg">Repeat your password</label>
-                                    </div>
-
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                                        <label class="form-check-label" for="form2Example3g">
-                                            I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                                        </label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center">
-                                        <button type="button"
-                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                                    </div>
-
-                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                                        class="fw-bold text-body"><u>Login here</u></a></p>
-
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </MDBCard>
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
         </div>
     );
 }
 
-export default FormExample;
+export default Register;
