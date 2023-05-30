@@ -14,7 +14,7 @@ import classNames from "classnames/bind";
 import styles from "../Authentication.module.scss";
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
 import {Link, useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
 
 const cx = classNames.bind(styles)
@@ -66,7 +66,7 @@ function Register() {
         formData.append('image', image);
 
         try {
-            const response = await axios.post('http://localhost:5000/user', formData, {
+            const response = await axios.post('http://localhost:5000/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -242,6 +242,8 @@ function Register() {
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
+
+            <ToastContainer />
         </div>
     );
 }
