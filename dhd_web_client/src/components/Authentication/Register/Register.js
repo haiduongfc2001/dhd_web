@@ -31,6 +31,7 @@ function Register() {
     // const [repeatPassword, setRepeatPassword] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
 
@@ -74,23 +75,25 @@ function Register() {
 
             setErrorMessage(response.data.message);
 
-            navigate('/');
+            // navigate('/');
 
-            setName('');
-            setEmail('');
-            setPhone('');
-            setImage(null);
+            // setName('');
+            // setEmail('');
+            // setPhone('');
+            // setPassword('');
+            // setImage(null);
             setErrorMessage('');
-            toast.success('User added successfully!', {
-                position: "bottom-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            setNotificationMessage(response.data.message);
+            // toast.success('User added successfully!', {
+            //     position: "bottom-center",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // });
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
@@ -217,11 +220,12 @@ function Register() {
                                     </MDBInput>
                                 ))}
 
-                                {errorMessage && <p className={'text-danger'}>{errorMessage}</p> }
+                                {errorMessage && <p className={'text-danger'}>{errorMessage}</p>}
+                                {notificationMessage && <p className={'text-danger'}>{notificationMessage}</p>}
 
                                 <div>
                                     <p className="mb-0 mt-2">Have an account?
-                                        <Link to="/signin" className="text-black-50 fw-bold ms-1">
+                                        <Link to="/login" className="text-black-50 fw-bold ms-1">
                                             Sign In
                                         </Link>
                                     </p>

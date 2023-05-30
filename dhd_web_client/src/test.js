@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {
     MDBBtn,
@@ -11,78 +11,75 @@ import {
 }
     from 'mdb-react-ui-kit';
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "~/context/AuthContext";
+import {toast, ToastContainer} from 'react-toastify';
 
-function Register() {
+function SignIn() {
 
-    const navigate = useNavigate();
+    const { setIsLoggedIn } = useContext(AuthContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    useEffect(() => {
+        setErrorMessage('');
+    }, [email, password]);
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+    useEffect(() => {
+        setErrorMessage('');
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+            navigate('/');
+        }
+    }, [setIsLoggedIn, navigate]);
 
-    const handleRegister = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('password', password);
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/user', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+            const response = await axios.post('http://localhost:5000/login', {
+                email,
+                password,
             });
 
-            setErrorMessage(response.data.message);
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+
+            setIsLoggedIn(true);
             navigate('/');
-            setEmail('');
-            setPassword('');
-            setErrorMessage('');
+            toast.success('Logged in successfully!', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+
         } catch (error) {
-            setErrorMessage('Error registering user!');
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage('Login Failed!');
+            }
+            // toast.error('Login Failed!', {
+            //     position: "bottom-center",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // })
         }
     };
-
-    const formRegisterArray = [
-        {
-            id: 'email',
-            type: 'email',
-            label: (
-                <>
-                    Your Email{" "}
-                    <span
-                        style={{color: "red"}}
-                        dangerouslySetInnerHTML={{__html: "*"}}
-                    />
-                </>
-            ),
-            value: email,
-            onChange: handleEmailChange,
-        },
-        {
-            id: 'password',
-            type: 'password',
-            label: (
-                <>
-                    Your Password{" "}
-                    <span
-                        style={{color: "red"}}
-                        dangerouslySetInnerHTML={{__html: "*"}}
-                    />
-                </>
-            ),
-            value: password,
-            onChange: handlePasswordChange,
-        },
-    ]
 
     return (
         <div>
@@ -91,31 +88,31 @@ function Register() {
                     <MDBCol col='12'>
                         <MDBCard>
                             <MDBCardBody>
-                                {formRegisterArray.map((form, index) => (
-                                    <MDBInput
-                                        key={index}
-                                        required
-                                        type={form.type}
-                                        id={form.id}
-                                        label={form.label}
-                                        value={form.value}
-                                        onChange={form.onChange}
-                                    />
-                                ))}
 
-                                {errorMessage && <p className={'text-danger'}>{errorMessage}</p> }
+                                <MDBInput
+                                    label='Email address'
+                                    type='email'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <MDBInput
+                                    label='Password'
+                                    type={password}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
 
-                                <MDBBtn onClick={handleRegister}>
-                                    Register
+                                <MDBBtn onClick={handleLogin}>
+                                    Login
                                 </MDBBtn>
                             </MDBCardBody>
-
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
+            <ToastContainer />
         </div>
     );
 }
 
-export default Register;
+export default SignIn;
