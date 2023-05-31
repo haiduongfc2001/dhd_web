@@ -28,7 +28,7 @@
   justify-content: space-between;
 }
 
-.logoadmin {
+.logo-admin {
   height: 50px;
   width: 100px;
   justify-content: center;
@@ -100,19 +100,45 @@
   }
 }
 
-.icon-bell, icon-logout {
+.icon-bell {
   height: 20px;
   width: 20px;
 }
 
-.logout {
+.logout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-logout,
+.icon-login {
+  height: 16px;
+  width: 16px;
+}
+
+.logout,
+.login {
   cursor: pointer;
   display: flex;
   align-items: center;
 }
 
-.icon-logout {
+.logout-content,
+.login-content {
+  display: flex;
+  align-items: center;
+}
+
+.icon-logout,
+.icon-login {
   margin-right: 5px;
+}
+
+.logout-text,
+.login-text {
+  display: flex;
+  align-items: center;
 }
 
 

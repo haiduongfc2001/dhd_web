@@ -3,20 +3,30 @@ import styles from "./Header.module.scss"
 import Tippy from '@tippyjs/react/headless';
 import logoDHD from "~/assets/images/logo_dhdadmin.png"
 import {BiBell} from "react-icons/bi";
-import {FiLogOut} from "react-icons/fi";
+import {FiLogIn, FiLogOut} from "react-icons/fi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleXmark, faMagnifyingGlass, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import DigitClock from "~/components/Layout/components/DigitClock/DigitClock";
 import {NavLink, useNavigate} from "react-router-dom";
 import api from "~/api/api";
+import {AuthContext} from "~/context/AuthContext";
 
 const cx = classNames.bind(styles)
 
 function Header(props) {
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
+
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     const handleLogout = async () => {
         try {
@@ -38,7 +48,7 @@ function Header(props) {
                     <img
                         src={logoDHD}
                         alt="logo dhd"
-                        className={cx('logoadmin')}
+                        className={cx('logo-admin')}
                     />
                 </NavLink>
                 <Tippy
@@ -67,19 +77,35 @@ function Header(props) {
                 </Tippy>
 
 
-                <div className={cx('')}>
+                <div>
                     <DigitClock />
                     <BiBell className={cx('icon-bell')}/>
-                    <div className={'ms-3'}>
-                        <Button
-                            // variant={'outline-primary'}
-                            className={cx('logout')}
-                            size={'lg'}
-                            onClick={handleLogout}
-                        >
-                            <FiLogOut className={cx('icon-logout')}/>
-                            <span>Logout</span>
-                        </Button>
+                    <div className={cx('ms-3 logout-container')}>
+                        {isLoggedIn === true
+                            ? (
+                                <Button
+                                    className={cx('logout')}
+                                    size={'lg'}
+                                    onClick={handleLogout}
+                                >
+                                    <div className="logout-content">
+                                        <FiLogOut className={cx('icon-logout')}/>
+                                        <span className={cx('logout-text')}>Logout</span>
+                                    </div>
+                                </Button>
+                        ) : (
+                                <NavLink to={'/login'}>
+                                    <Button
+                                        className={cx('login')}
+                                        size={'lg'}
+                                    >
+                                        <div className="login-content">
+                                            <FiLogIn className={cx('icon-login')}/>
+                                            <span className={cx('login-text')}>Log in</span>
+                                        </div>
+                                    </Button>
+                                </NavLink>
+                            )}
                     </div>
                 </div>
             </div>

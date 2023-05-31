@@ -21,7 +21,7 @@ function NotFound() {
                         </MDBBtn>
                     </NavLink>
                 ) : (
-                    <NavLink to={'/admin/login'}>
+                    <NavLink to={'/login'}>
                         <MDBBtn>
                             <GrReturn className={'me-3'} style={{fontSize: '20px'}} />
                             <span style={{fontSize: '16px'}} className={'bold'}>

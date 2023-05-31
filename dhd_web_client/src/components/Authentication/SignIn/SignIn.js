@@ -11,7 +11,7 @@ import {
 }
     from 'mdb-react-ui-kit';
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {AuthContext} from "~/context/AuthContext";
 import {toast, ToastContainer} from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
@@ -159,9 +159,12 @@ function SignIn() {
                                 {notificationMessage && <p className={'text-danger'}>{notificationMessage}</p>}
 
                                 <p className='small mb-3 pb-lg-2'>
-                                    <a className='text-black-50' href='/login'>
-                                        Forgot password?
-                                    </a>
+                                    <NavLink
+                                        className='text-black-100'
+                                             to='/forgot-password'
+                                    >
+                                        Forgot password
+                                    </NavLink>
                                 </p>
 
                                 <MDBBtn
