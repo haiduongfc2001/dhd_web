@@ -1,53 +1,71 @@
 // import React, {useState} from "react";
-// import {ToastContainer} from "react-toastify";
 // import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdb-react-ui-kit";
 //
-// const ForgotPassword = () => {
+// const ResetPassword = () => {
 //
-//     const [email, setEmail] = useState('');
+//     const [password, setPassword] = useState('');
+//     const [confirmPassword, setConfirmPassword] = useState("");
 //
 //     const [errorMessage, setErrorMessage] = useState('');
-//     const [notificationMessage, setNotificationMessage] = useState('');
 //
-//     const handleSubmit = async () => {
+//     const handleResetPassword = async (e) => {
+//         e.preventDefault();
+//
+//         if (!password || !confirmPassword) {
+//             setErrorMessage("Xin hãy nhập mật khẩu!");
+//             return;
+//         }
+//         if (password !== confirmPassword) {
+//             setErrorMessage("Mật khẩu không khớp");
+//             return;
+//         }
+//
 //         try {
 //
-//         } catch (err) {
 //
+//
+//         } catch (error) {
+//                 setErrorMessage("Lỗi server");
 //         }
 //     }
 //
 //     return (
 //         <div>
-//             <MDBContainer fluid>
+//             <MDBContainer>
 //                 <MDBRow>
 //                     <MDBCol col='12'>
 //                         <MDBCard>
 //                             <MDBCardBody>
+//
 //                                 <MDBInput
-//                                     label='Email address'
-//                                     type='email'
-//                                     autoFocus
-//                                     autoComplete='off'
-//                                     value={email}
-//                                     onChange={(e) => setEmail(e.target.value)}
+//                                     label={'mật khẩu mới'}
+//                                     type='password'
+//                                     value={password}
+//                                     onChange={(e) => setPassword(e.target.value)}
+//                                 />
+//                                 <MDBInput
+//                                     label={'Xác nhận mật khẩu mới'}
+//                                     type='password'
+//                                     value={confirmPassword}
+//                                     onChange={(e) => setConfirmPassword(e.target.value)}
 //                                 />
 //
-//                                 {errorMessage && <p className={'text-danger'}>{errorMessage}</p>}
-//                                 {notificationMessage && <p className={'text-danger'}>{notificationMessage}</p>}
+//                                 <input
+//                                     type="hidden"
+//                                     name="user_id"
+//                                     value={user_id}
+//                                 />
 //
-//                                 <MDBBtn onClick={handleSubmit}>
-//                                     Gửi mail
+//                                 <MDBBtn onClick={handleResetPassword}>
+//                                     Xác nhận
 //                                 </MDBBtn>
 //                             </MDBCardBody>
 //                         </MDBCard>
 //                     </MDBCol>
 //                 </MDBRow>
 //             </MDBContainer>
-//
-//             <ToastContainer/>
 //         </div>
 //     );
 // }
 //
-// export default ForgotPassword;
+// export default ResetPassword;

@@ -4,6 +4,7 @@ import SignIn from "~/components/Authentication/SignIn/SignIn";
 import Register from "~/components/Authentication/Register/Register";
 import NotFound from "~/components/NotFound/NotFound";
 import ForgotPassword from "~/components/Authentication/ForgotPassword/ForgotPassword";
+import ResetPassword from "~/components/Authentication/ResetPassword/ResetPassword";
 
 export const publicRoutes = [
     { path: '/register', component: Register, layout: null },
@@ -12,6 +13,7 @@ export const publicRoutes = [
     { path: '/not-found', component: NotFound, layout: null },
     { path: '/', component: Home },
     { path: '/forgot-password', component: ForgotPassword, layout: null },
+    { path: '/reset-password', component: ResetPassword, layout: null },
 ]
 
 // Private Routes
