@@ -20,13 +20,12 @@ function Header(props) {
 
     const handleLogout = async () => {
         try {
-            const response = await api.post("/admin/logout", {
-                token: localStorage.getItem("token"), // Assuming the token is stored in localStorage
-            });
-            if (response.status === 200) {
-                localStorage.removeItem("token"); // Clear the token from localStorage
-                navigate('/login');
-            }
+            await api.get('http://localhost:5000/logout');
+
+            // Xóa token trong localStorage (hoặc sessionStorage)
+            localStorage.removeItem('token');
+
+            navigate('/login'); // Chuyển hướng đến trang đăng nhập
         } catch (error) {
             console.error("Logout failed:", error);
         }
