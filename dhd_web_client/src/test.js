@@ -1,71 +1,59 @@
-// import React, {useState} from "react";
-// import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdb-react-ui-kit";
+// import classNames from "classnames/bind";
+// import styles from "./Header.module.scss"
+// import Tippy from '@tippyjs/react/headless';
+// import logoDHD from "~/assets/images/logo_dhdadmin.png"
+// import {BiBell} from "react-icons/bi";
+// import {FiLogIn, FiLogOut} from "react-icons/fi";
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+// import {faCircleXmark, faMagnifyingGlass, faSpinner} from "@fortawesome/free-solid-svg-icons";
+// import {useContext, useEffect, useState} from "react";
+// import Button from "react-bootstrap/Button";
+// import DigitClock from "~/components/Layout/components/DigitClock/DigitClock";
+// import {NavLink, useNavigate} from "react-router-dom";
+// import api from "~/api/api";
+// import {AuthContext} from "~/context/AuthContext";
 //
-// const ResetPassword = () => {
+// const cx = classNames.bind(styles)
 //
-//     const [password, setPassword] = useState('');
-//     const [confirmPassword, setConfirmPassword] = useState("");
+// function Header(props) {
+//     const [searchResult, setSearchResult] = useState([]);
+//     const navigate = useNavigate();
 //
-//     const [errorMessage, setErrorMessage] = useState('');
+//     const { isLoggedIn, setIsLoggedIn, setUser } = useContext(AuthContext);
 //
-//     const handleResetPassword = async (e) => {
-//         e.preventDefault();
+//     const { user } = useContext(AuthContext);
 //
-//         if (!password || !confirmPassword) {
-//             setErrorMessage("Xin hãy nhập mật khẩu!");
-//             return;
+//     useEffect(() => {
+//         const token = localStorage.getItem('token');
+//         if (token) {
+//             setIsLoggedIn(true);
 //         }
-//         if (password !== confirmPassword) {
-//             setErrorMessage("Mật khẩu không khớp");
-//             return;
-//         }
+//     }, []);
 //
-//         try {
-//
-//
-//
-//         } catch (error) {
-//                 setErrorMessage("Lỗi server");
-//         }
-//     }
+//     useEffect(() => {
+//         api.get('/user/:_id')
+//             .then((response) => {
+//                 setUser(response.data)
+//             })
+//             .catch((error) => {
+//                 console.log(error);
+//             })
+//     })
 //
 //     return (
-//         <div>
-//             <MDBContainer>
-//                 <MDBRow>
-//                     <MDBCol col='12'>
-//                         <MDBCard>
-//                             <MDBCardBody>
-//
-//                                 <MDBInput
-//                                     label={'mật khẩu mới'}
-//                                     type='password'
-//                                     value={password}
-//                                     onChange={(e) => setPassword(e.target.value)}
-//                                 />
-//                                 <MDBInput
-//                                     label={'Xác nhận mật khẩu mới'}
-//                                     type='password'
-//                                     value={confirmPassword}
-//                                     onChange={(e) => setConfirmPassword(e.target.value)}
-//                                 />
-//
-//                                 <input
-//                                     type="hidden"
-//                                     name="user_id"
-//                                     value={user_id}
-//                                 />
-//
-//                                 <MDBBtn onClick={handleResetPassword}>
-//                                     Xác nhận
-//                                 </MDBBtn>
-//                             </MDBCardBody>
-//                         </MDBCard>
-//                     </MDBCol>
-//                 </MDBRow>
-//             </MDBContainer>
-//         </div>
-//     );
+//         <header>
+//             <div>
+//                 <div>
+//                     <img
+//                         src={`${api.defaults.baseURL}/userImages/${user.image}`}
+//                         alt="{user.name}"
+//                         className='rounded-circle'
+//                     />
+//                     <p>{user.email}</p>
+//                 </div>
+//             </div>
+//         </header>
+//     )
 // }
 //
-// export default ResetPassword;
+// export default Header;

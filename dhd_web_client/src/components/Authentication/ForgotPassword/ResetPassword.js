@@ -22,7 +22,7 @@ const ResetPassword = () => {
 
     useEffect(() => {
         const token = new URLSearchParams(window.location.search).get('token');
-        api.get(`/forget-password-sss?token=${token}`)
+        api.get(`/forget-password?token=${token}`)
             .then(response => {
                 setUser_id(response.data.user_id);
             })

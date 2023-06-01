@@ -22,7 +22,7 @@ const cx = classNames.bind(styles)
 
 function SignIn() {
 
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setUser_id, setUser } = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -51,23 +51,32 @@ function SignIn() {
         e.preventDefault();
 
         try {
+            if (!email) {
+                await setErrorMessage('Xin vui lòng nhập email của bạn!')
+            }
+            if (!password) {
+                await setErrorMessage('Xin vui lòng nhập mật khẩu của bạn!')
+            }
+
             const response = await axios.post('http://localhost:5000/login', {
                 email,
                 password,
             });
 
-            const token = response.data.token;
+            const { token, user_id, user } = response.data;
 
             // Save the token to local storage
             localStorage.setItem('token', token);
 
+
             setIsLoggedIn(true);
+
+            setUser_id(user_id);
+            setUser(user);
             // setEmail('');
             // setPassword('');
             // setSuccess(true);
-            // Redirect to the desired page after successful login
-            // You can replace the URL below with the appropriate route
-            // window.location.href = 'http://localhost:3000/';
+
             navigate('/');
             toast.success('Logged in successfully!', {
                 position: "bottom-center",
@@ -120,7 +129,15 @@ function SignIn() {
                                 <MDBInput
                                     wrapperClass='mb-4 mx-5 w-100'
                                     labelClass='text-black'
-                                    label='Email address'
+                                    label={
+                                        <>
+                                            Email Address{" "}
+                                            <span
+                                                style={{color: "red"}}
+                                                dangerouslySetInnerHTML={{__html: "*"}}
+                                            />
+                                        </>
+                                    }
                                     // id='formControlLg'
                                     type='email'
                                     size='lg'
@@ -134,8 +151,15 @@ function SignIn() {
                                 <MDBInput
                                     wrapperClass='mb-4 mx-5 w-100'
                                     labelClass='text-black'
-                                    label='Password'
-                                    // id='formControlLg'
+                                    label={
+                                        <>
+                                            Your Password{" "}
+                                            <span
+                                                style={{color: "red"}}
+                                                dangerouslySetInnerHTML={{__html: "*"}}
+                                            />
+                                        </>
+                                    }
                                     type={PasswordInputType}
                                     size='lg'
                                     value={password}

@@ -12,6 +12,7 @@ import DigitClock from "~/components/Layout/components/DigitClock/DigitClock";
 import {NavLink, useNavigate} from "react-router-dom";
 import api from "~/api/api";
 import {AuthContext} from "~/context/AuthContext";
+import {MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle} from "mdb-react-ui-kit";
 
 const cx = classNames.bind(styles)
 
@@ -19,7 +20,9 @@ function Header(props) {
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, setIsLoggedIn, setUser } = useContext(AuthContext);
+
+    const { user, user_id } = useContext(AuthContext);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -28,9 +31,19 @@ function Header(props) {
         }
     }, []);
 
+    // useEffect(() => {
+    //     api.get(`/user/${user_id}`)
+    //         .then((response) => {
+    //             setUser(response.data)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         })
+    // })
+
     const handleLogout = async () => {
         try {
-            await api.get('http://localhost:5000/logout');
+            await api.get('/logout');
 
             // Xóa token trong localStorage (hoặc sessionStorage)
             localStorage.removeItem('token');
@@ -76,9 +89,29 @@ function Header(props) {
                     </div>
                 </Tippy>
 
+                <MDBDropdown className='btn-group shadow-0'>
+                    <div className='me-3'>
+                        <img
+                            src={`${api.defaults.baseURL}/userImages/${user.image}`}
+                            alt="{user.name}"
+                            style={{width: '45px', height: '45px'}}
+                            className='rounded-circle me-3'
+                        />
+                        <p className='text-black-150 mb-0'>{user.email}</p>
+                    </div>
+                    <MDBDropdownToggle split></MDBDropdownToggle>
+                    <MDBDropdownMenu>
+                        <NavLink to={'/profile'}>
+                            <MDBDropdownItem link>Hồ sơ</MDBDropdownItem>
+                        </NavLink>
+                        <MDBDropdownItem link>
+                            Đăng xuất
+                        </MDBDropdownItem>
+                    </MDBDropdownMenu>
+                </MDBDropdown>
 
                 <div>
-                    <DigitClock />
+                    {/*<DigitClock />*/}
                     <BiBell className={cx('icon-bell')}/>
                     <div className={cx('ms-3 logout-container')}>
                         {isLoggedIn === true
