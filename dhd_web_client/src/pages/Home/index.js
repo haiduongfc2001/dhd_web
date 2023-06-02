@@ -10,16 +10,13 @@ import api from "~/api/api";
 const cx = classNames.bind(styles)
 
 function Home() {
-    const { user_id } = useContext(AuthContext);
 
-    return(
+    return (
         <div className={cx('wrapper')}>
             {/*<BreadcrumbExample />*/}
             {/*<ListProducts />*/}
-
-            <h2>User ID: {user_id}</h2>
-
-            <ToastContainer />
+            Home
+            <ToastContainer/>
         </div>
     )
 }

@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import axios from 'axios';
 import {
     MDBBtn,
     MDBContainer,
@@ -11,18 +10,19 @@ import {
 }
     from 'mdb-react-ui-kit';
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
-import {NavLink, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {AuthContext} from "~/context/AuthContext";
 import {toast, ToastContainer} from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
 
 import classNames from "classnames/bind";
 import styles from "../Authentication.module.scss";
+import api from "~/api/api";
 const cx = classNames.bind(styles)
 
 function SignIn() {
 
-    const { setIsLoggedIn, setUser_id, setUser } = useContext(AuthContext);
+    const { setIsLoggedIn, setUser } = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -58,12 +58,12 @@ function SignIn() {
                 await setErrorMessage('Xin vui lòng nhập mật khẩu của bạn!')
             }
 
-            const response = await axios.post('http://localhost:5000/login', {
+            const response = await api.post('/login', {
                 email,
                 password,
             });
 
-            const { token, user_id, user } = response.data;
+            const { token, user } = response.data;
 
             // Save the token to local storage
             localStorage.setItem('token', token);
@@ -71,8 +71,10 @@ function SignIn() {
 
             setIsLoggedIn(true);
 
-            setUser_id(user_id);
             setUser(user);
+            // Save user object in local storage
+            localStorage.setItem('user', JSON.stringify(user));
+
             // setEmail('');
             // setPassword('');
             // setSuccess(true);
@@ -138,10 +140,9 @@ function SignIn() {
                                             />
                                         </>
                                     }
-                                    // id='formControlLg'
                                     type='email'
                                     size='lg'
-                                    style={{maxWidth: '250px'}}
+                                    // style={{maxWidth: '250px'}}
                                     autoFocus
                                     autoComplete='off'
                                     value={email}
@@ -200,6 +201,15 @@ function SignIn() {
                                 >
                                     Login
                                 </MDBBtn>
+
+                                <div className='mt-2'>
+                                    <p className="mb-0 mt-2">Haven't an account?
+                                        <Link to="/register" className="text-black-50 fw-bold ms-1">
+                                            Register
+                                        </Link>
+                                    </p>
+                                </div>
+
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>

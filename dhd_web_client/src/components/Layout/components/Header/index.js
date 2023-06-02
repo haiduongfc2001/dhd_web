@@ -9,10 +9,14 @@ import {faCircleXmark, faMagnifyingGlass, faSpinner} from "@fortawesome/free-sol
 import {useContext, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import DigitClock from "~/components/Layout/components/DigitClock/DigitClock";
-import {NavLink, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import api from "~/api/api";
 import {AuthContext} from "~/context/AuthContext";
 import {MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle} from "mdb-react-ui-kit";
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import {Image, SplitButton} from "react-bootstrap";
 
 const cx = classNames.bind(styles)
 
@@ -20,9 +24,7 @@ function Header(props) {
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn, setUser } = useContext(AuthContext);
-
-    const { user, user_id } = useContext(AuthContext);
+    const {isLoggedIn, setIsLoggedIn, user, setUser, userImage, setUserImage} = useContext(AuthContext);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -31,15 +33,22 @@ function Header(props) {
         }
     }, []);
 
-    // useEffect(() => {
-    //     api.get(`/user/${user_id}`)
-    //         .then((response) => {
-    //             setUser(response.data)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // })
+    useEffect(() => {
+        // Check if user object exists in local storage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, [setUser]);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUserImage(parsedUser.image);
+        }
+    }, []);
+
 
     const handleLogout = async () => {
         try {
@@ -47,6 +56,7 @@ function Header(props) {
 
             // Xóa token trong localStorage (hoặc sessionStorage)
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
 
             navigate('/login'); // Chuyển hướng đến trang đăng nhập
         } catch (error) {
@@ -91,21 +101,30 @@ function Header(props) {
 
                 <MDBDropdown className='btn-group shadow-0'>
                     <div className='me-3'>
-                        <img
-                            src={`${api.defaults.baseURL}/userImages/${user.image}`}
-                            alt="{user.name}"
-                            style={{width: '45px', height: '45px'}}
-                            className='rounded-circle me-3'
+                        <Image
+                            src={`${api.defaults.baseURL}/userImages/${userImage}`}
+                            alt="avatar"
+                            roundedCircle
+                            style={{ width: "45px", height: "45px" }}
+                            className="me-3"
                         />
                         <p className='text-black-150 mb-0'>{user.email}</p>
                     </div>
                     <MDBDropdownToggle split></MDBDropdownToggle>
                     <MDBDropdownMenu>
-                        <NavLink to={'/profile'}>
-                            <MDBDropdownItem link>Hồ sơ</MDBDropdownItem>
-                        </NavLink>
-                        <MDBDropdownItem link>
-                            Đăng xuất
+                        <MDBDropdownItem className='ms-3 mt-2 mb-2'>
+                            <Link to="/profile" className="dropdown-link">
+                                Hồ sơ
+                            </Link>
+                        </MDBDropdownItem>
+                        <MDBDropdownItem
+                            className='ms-3 mb-2'
+                            style={{cursor: 'pointer'}}
+                            onClick={handleLogout}
+                        >
+                            <Link to={''}>
+                                Đăng xuất
+                            </Link>
                         </MDBDropdownItem>
                     </MDBDropdownMenu>
                 </MDBDropdown>
@@ -126,7 +145,7 @@ function Header(props) {
                                         <span className={cx('logout-text')}>Logout</span>
                                     </div>
                                 </Button>
-                        ) : (
+                            ) : (
                                 <NavLink to={'/login'}>
                                     <Button
                                         className={cx('login')}
