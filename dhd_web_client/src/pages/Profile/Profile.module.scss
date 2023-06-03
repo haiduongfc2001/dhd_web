@@ -16,3 +16,16 @@
   border-radius: 5px;
   padding: 10px;
 }
+
+.label-profile {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333333;
+
+  &::after {
+    content: '*';
+    color: red;
+    display: inline;
+    margin-left: 2px;
+  }
+}

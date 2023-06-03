@@ -63,17 +63,23 @@ function SignIn() {
                 password,
             });
 
-            const { token, user } = response.data;
-
+            const { token, user_id } = response.data;
             // Save the token to local storage
             localStorage.setItem('token', token);
 
+            localStorage.setItem('user_id', user_id);
 
             setIsLoggedIn(true);
 
-            setUser(user);
-            // Save user object in local storage
-            localStorage.setItem('user', JSON.stringify(user));
+            if (user_id) {
+                api.get(`/user/${user_id}`)
+                    .then((response) => {
+                        setUser(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
 
             // setEmail('');
             // setPassword('');

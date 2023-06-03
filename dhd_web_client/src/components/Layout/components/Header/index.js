@@ -24,7 +24,7 @@ function Header(props) {
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
 
-    const {isLoggedIn, setIsLoggedIn, user, setUser, userImage, setUserImage} = useContext(AuthContext);
+    const {isLoggedIn, setIsLoggedIn, user} = useContext(AuthContext);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -33,21 +33,21 @@ function Header(props) {
         }
     }, []);
 
-    useEffect(() => {
-        // Check if user object exists in local storage
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-    }, [setUser]);
-
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            setUserImage(parsedUser.image);
-        }
-    }, []);
+    // useEffect(() => {
+    //     // Check if user object exists in local storage
+    //     const storedUser = localStorage.getItem('user');
+    //     if (storedUser) {
+    //         setUser(JSON.parse(storedUser));
+    //     }
+    // }, [setUser]);
+    //
+    // useEffect(() => {
+    //     const storedUser = localStorage.getItem("user");
+    //     if (storedUser) {
+    //         const parsedUser = JSON.parse(storedUser);
+    //         setUserImage(parsedUser.image);
+    //     }
+    // }, []);
 
 
     const handleLogout = async () => {
@@ -56,7 +56,7 @@ function Header(props) {
 
             // Xóa token trong localStorage (hoặc sessionStorage)
             localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            localStorage.removeItem('user_id');
 
             navigate('/login'); // Chuyển hướng đến trang đăng nhập
         } catch (error) {
@@ -102,7 +102,7 @@ function Header(props) {
                 <MDBDropdown className='btn-group shadow-0'>
                     <div className='me-3'>
                         <Image
-                            src={`${api.defaults.baseURL}/userImages/${userImage}`}
+                            src={`${api.defaults.baseURL}/userImages/${user.image}`}
                             alt="avatar"
                             roundedCircle
                             style={{ width: "45px", height: "45px" }}

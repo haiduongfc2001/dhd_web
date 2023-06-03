@@ -17,7 +17,7 @@ function DefaultLayout({ children }) {
                 </div>
             </div>
 
-            <ToastContainer />
+            {/*<ToastContainer />*/}
         </div>
     )
 }
