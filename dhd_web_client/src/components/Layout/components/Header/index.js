@@ -34,6 +34,11 @@ function Header(props) {
     }, []);
 
     // useEffect(() => {
+    //     if (user.id)
+    // })
+
+
+    // useEffect(() => {
     //     // Check if user object exists in local storage
     //     const storedUser = localStorage.getItem('user');
     //     if (storedUser) {
@@ -101,13 +106,18 @@ function Header(props) {
 
                 <MDBDropdown className='btn-group shadow-0'>
                     <div className='me-3'>
-                        <Image
-                            src={`${api.defaults.baseURL}/userImages/${user.image}`}
-                            alt="avatar"
-                            roundedCircle
-                            style={{ width: "45px", height: "45px" }}
-                            className="me-3"
-                        />
+                        {user.image !== undefined ? (
+                            <Image
+                                src={`${api.defaults.baseURL}/userImages/${user.image}`}
+                                alt="avatar"
+                                roundedCircle
+                                style={{ width: "45px", height: "45px" }}
+                                className="me-3"
+                            />
+                        ) : (
+                            <div></div>
+                            )
+                        }
                         <p className='text-black-150 mb-0'>{user.email}</p>
                     </div>
                     <MDBDropdownToggle split></MDBDropdownToggle>

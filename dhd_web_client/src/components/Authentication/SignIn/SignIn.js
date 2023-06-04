@@ -150,7 +150,6 @@ function SignIn() {
                                     size='lg'
                                     // style={{maxWidth: '250px'}}
                                     autoFocus
-                                    autoComplete='off'
                                     value={email}
                                     required
                                     onChange={(e) => setEmail(e.target.value)}

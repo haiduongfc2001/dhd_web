@@ -24,13 +24,13 @@ export const publicRoutes = [
 export const privateRoutes = [
 ]
 
-const errorRoutes = [
+export const errorRoutes = [
     // { path: '/not-found', component: NotFound },
     // ... other error routes
 ];
 
-export default [
-    publicRoutes,
-    privateRoutes,
-    errorRoutes
-];
+// export  default [
+//     publicRoutes,
+//     privateRoutes,
+//     errorRoutes
+// ];

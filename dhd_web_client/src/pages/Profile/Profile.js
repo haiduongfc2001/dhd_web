@@ -14,8 +14,8 @@ const cx = classNames.bind(styles);
 const Profile = () => {
     const {user, setUser, userImage, setUserImage} = useContext(AuthContext);
 
+    // const [email, setEmail] = useState(user.email);
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [image, setImage] = useState(null);
 
@@ -29,62 +29,57 @@ const Profile = () => {
         setPhone(e.target.value);
     };
 
-    // const handleImageChange = (e) => {
-    //     setImage(e.target.files[0]);
-    // };
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    };
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
 
         console.log('Name User', user.name);
 
-        // Update the name state with the new value
-        const updatedName = name;
+        // // Tạo một đối tượng FormData để gửi dữ liệu
+        // const formData = new FormData();
+        // formData.append("name", updatedName);
+        // formData.append("phone", phone);
 
-        // Tạo một đối tượng FormData để gửi dữ liệu
-        const formData = new FormData();
-        formData.append("name", updatedName);
-        formData.append("phone", phone);
-
-        if (!updatedName || !phone ) {
+        if (!name || !phone) {
             setErrorMessage('Please enter all information!');
             return;
         }
+
+        // Tạo một đối tượng mới từ thông tin người dùng hiện tại và dữ liệu cập nhật
+        const updatedUser = {...user, name, phone};
 
         try {
             console.log('User Id: ', user);
             console.log('User Id: ', user._id);
 
-            const response = await api.put(`/edit-profile/${user._id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            const response = await api.put(`/edit-profile/${user._id}`, updatedUser);
+
+            // Cập nhật thông tin người dùng trong state và cơ sở dữ liệu
+            setUser(updatedUser);
 
             // const updatedUser = response.data;
 
             // Handle the updated user data here or close the modal
             setErrorMessage('');
 
-            // Cập nhật lại thông tin người dùng trong AuthContext
-            const updatedUser = { ...user, name, phone };
-            setUser(updatedUser);
-            setName(updatedUser.name);
             console.log("Updated User:", updatedUser.name);
-            setPhone(updatedUser.phone);
+            console.log("Updated User:", updatedUser.phone);
 
             // setUserImage(updatedUser.image);
 
-            toast.success('Cập nhật thông tin thành công!', {
-                position: "bottom-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            })
+            // toast.success('Cập nhật thông tin thành công!', {
+            //     position: "bottom-center",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // })
 
         } catch (err) {
             setErrorMessage('Đã xảy ra lỗi khi cập nhật thông tin.');
@@ -92,9 +87,10 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        setName(user.name);
-        setEmail(user.email);
-        setPhone(user.phone);
+        if (user) {
+            setName(user.name);
+            setPhone(user.phone);
+        }
     }, [user]);
 
     return (
@@ -105,14 +101,21 @@ const Profile = () => {
                     <Card className={cx('wrapper')}>
                         <Card.Body className='mt-4 mb-4'>
                             {/*<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>*/}
-                            {/*    <Image*/}
-                            {/*        src={`${api.defaults.baseURL}/userImages/${userImage}`}*/}
-                            {/*        alt="avatar"*/}
-                            {/*        roundedCircle*/}
-                            {/*        style={{width: "100px", height: "100px"}}*/}
-                            {/*    />*/}
-                            {/*    <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />*/}
-                            {/*    <Button className="mt-3 mb-3" onClick={() => document.querySelector('input[type="file"]').click()}>*/}
+                            {/*    {user.image !== undefined ? (*/}
+                            {/*        <Image*/}
+                            {/*            src={`${api.defaults.baseURL}/userImages/${user.image}`}*/}
+                            {/*            alt="avatar"*/}
+                            {/*            roundedCircle*/}
+                            {/*            style={{width: "100px", height: "100px"}}*/}
+                            {/*        />*/}
+                            {/*    ) : (*/}
+                            {/*        <div></div>*/}
+                            {/*    )*/}
+                            {/*    }*/}
+                            {/*    <input type="file" accept="image/*" onChange={handleImageChange}*/}
+                            {/*           style={{display: "none"}}/>*/}
+                            {/*    <Button className="mt-3 mb-3"*/}
+                            {/*            onClick={() => document.querySelector('input[type="file"]').click()}>*/}
                             {/*        Thay đổi ảnh*/}
                             {/*    </Button>*/}
                             {/*    /!*<Button onClick={handleImageUpload}>Tải lên</Button>*!/*/}
@@ -132,7 +135,7 @@ const Profile = () => {
                                         <InputGroup.Text>
                                             <MdEmail color="gray"/>
                                         </InputGroup.Text>
-                                        <Form.Control type="email" disabled value={user.email}/>
+                                        <Form.Control type="email" disabled value={user.email || ""}/>
                                     </InputGroup>
                                 </Form.Group>
 
@@ -145,7 +148,7 @@ const Profile = () => {
                                         <Form.Control
                                             type="text"
                                             placeholder="Add your username here"
-                                            value={name}
+                                            value={name || ""}
                                             onChange={handleNameChange}
                                         />
                                     </InputGroup>
@@ -161,7 +164,7 @@ const Profile = () => {
                                             type="text"
                                             placeholder="Add your phone here"
                                             pattern="[0-9]*"
-                                            value={phone}
+                                            value={phone || ""}
                                             onChange={handlePhoneChange}
                                         />
                                     </InputGroup>
@@ -182,7 +185,7 @@ const Profile = () => {
                 <Col sm={3}></Col>
             </Row>
 
-            <ToastContainer />
+            <ToastContainer/>
         </Container>
     )
 
