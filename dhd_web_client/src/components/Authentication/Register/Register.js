@@ -58,6 +58,12 @@ function Register() {
     const handleRegister = async (event) => {
         event.preventDefault();
 
+        // Kiểm tra xem đã nhập đầy đủ thông tin như name, email, name, password và ảnh đại diện chưa
+        if (!name || !email || !password || !phone || !image) {
+            setErrorMessage('Xin nhập đầy đủ thông tin!');
+            return;
+        }
+
         // Tạo formData để gửi dữ liệu và file
         const formData = new FormData();
         formData.append('name', name);
@@ -84,16 +90,16 @@ function Register() {
             // setImage(null);
             setErrorMessage('');
             setNotificationMessage(response.data.message);
-            // toast.success('User added successfully!', {
-            //     position: "bottom-center",
-            //     autoClose: 3000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // });
+            toast.success('User added successfully!', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
@@ -192,10 +198,10 @@ function Register() {
                                 <img
                                     src={logoDHD}
                                     alt="logo dhd"
-                                    className={cx('logoadmin')}
+                                    className={cx('logo-admin')}
                                 />
                                 <p className="text-black-150 mt-3 mb-3">
-                                    Please login with your account!
+                                    Vui lòng đăng ký tài khoản!
                                 </p>
 
                                 {formRegisterArray.map((form, index) => (

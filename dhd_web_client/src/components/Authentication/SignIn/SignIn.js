@@ -50,13 +50,16 @@ function SignIn() {
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        if (!email) {
+            await setErrorMessage('Xin vui lòng nhập email của bạn!');
+            return;
+        }
+        if (!password) {
+            await setErrorMessage('Xin vui lòng nhập mật khẩu của bạn!');
+            return;
+        }
+
         try {
-            if (!email) {
-                await setErrorMessage('Xin vui lòng nhập email của bạn!')
-            }
-            if (!password) {
-                await setErrorMessage('Xin vui lòng nhập mật khẩu của bạn!')
-            }
 
             const response = await api.post('/login', {
                 email,
@@ -103,16 +106,16 @@ function SignIn() {
             } else {
                 setErrorMessage('Login Failed!');
             }
-            // toast.error('Login Failed!', {
-            //     position: "bottom-center",
-            //     autoClose: 3000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // })
+            toast.error('Login Failed!', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
         }
     };
 
@@ -130,8 +133,8 @@ function SignIn() {
                                     alt="logo dhd"
                                     className={cx('logo-admin')}
                                 />
-                                <p className="text-black-150 mt-3 mb-3">
-                                    Please login with your admin account!
+                                <p className="text-black-150 mt-3 mb-5">
+                                    Vui lòng đăng nhập bằng tài khoản của bạn!
                                 </p>
 
                                 <MDBInput

@@ -9,7 +9,6 @@ import {
 import SignIn from "~/components/Authentication/SignIn/SignIn";
 import Register from "~/components/Authentication/Register/Register";
 
-
 function Authentication () {
     const [justifyActive, setJustifyActive] = useState('tab1');
 

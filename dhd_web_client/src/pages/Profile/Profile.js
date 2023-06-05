@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "~/context/AuthContext";
 import {Button, Card, Col, Container, Form, Image, InputGroup, Row} from "react-bootstrap";
 import api from "~/api/api";
@@ -70,16 +70,16 @@ const Profile = () => {
 
             // setUserImage(updatedUser.image);
 
-            // toast.success('Cập nhật thông tin thành công!', {
-            //     position: "bottom-center",
-            //     autoClose: 3000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // })
+            toast.success('Cập nhật thông tin thành công!', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
 
         } catch (err) {
             setErrorMessage('Đã xảy ra lỗi khi cập nhật thông tin.');

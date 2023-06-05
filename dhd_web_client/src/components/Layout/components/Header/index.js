@@ -104,9 +104,9 @@ function Header(props) {
                     </div>
                 </Tippy>
 
-                <MDBDropdown className='btn-group shadow-0'>
-                    <div className='me-3'>
-                        {user.image !== undefined ? (
+                {user.image !== undefined && (
+                    <MDBDropdown className='btn-group shadow-0'>
+                        <div className='me-3'>
                             <Image
                                 src={`${api.defaults.baseURL}/userImages/${user.image}`}
                                 alt="avatar"
@@ -114,30 +114,27 @@ function Header(props) {
                                 style={{ width: "45px", height: "45px" }}
                                 className="me-3"
                             />
-                        ) : (
-                            <div></div>
-                            )
-                        }
-                        <p className='text-black-150 mb-0'>{user.email}</p>
-                    </div>
-                    <MDBDropdownToggle split></MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                        <MDBDropdownItem className='ms-3 mt-2 mb-2'>
-                            <Link to="/profile" className="dropdown-link">
-                                Hồ sơ
-                            </Link>
-                        </MDBDropdownItem>
-                        <MDBDropdownItem
-                            className='ms-3 mb-2'
-                            style={{cursor: 'pointer'}}
-                            onClick={handleLogout}
-                        >
-                            <Link to={''}>
-                                Đăng xuất
-                            </Link>
-                        </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                </MDBDropdown>
+                            <p className='text-black-150 mb-0'>{user.email}</p>
+                        </div>
+                        <MDBDropdownToggle split></MDBDropdownToggle>
+                        <MDBDropdownMenu>
+                            <MDBDropdownItem className='ms-3 mt-2 mb-2'>
+                                <Link to="/profile" className="dropdown-link">
+                                    Hồ sơ
+                                </Link>
+                            </MDBDropdownItem>
+                            <MDBDropdownItem
+                                className='ms-3 mb-2'
+                                style={{cursor: 'pointer'}}
+                                onClick={handleLogout}
+                            >
+                                <Link to={''}>
+                                    Đăng xuất
+                                </Link>
+                            </MDBDropdownItem>
+                        </MDBDropdownMenu>
+                    </MDBDropdown>
+                )}
 
                 <div>
                     {/*<DigitClock />*/}

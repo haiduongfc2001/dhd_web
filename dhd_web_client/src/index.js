@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyles  from "~/components/GlobalStyles";
 import {AuthProvider} from "~/context/AuthContext";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthProvider>
