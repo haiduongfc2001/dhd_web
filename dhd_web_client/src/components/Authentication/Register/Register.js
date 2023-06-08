@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import {
     MDBBtn,
     MDBContainer,
@@ -10,13 +9,14 @@ import {
     MDBInput, MDBRadio,
 }
     from 'mdb-react-ui-kit';
-import classNames from "classnames/bind";
-import styles from "../Authentication.module.scss";
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
 import {Link, useNavigate} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
+import api from "~/api/api";
 
+import classNames from "classnames/bind";
+import styles from "../Authentication.module.scss";
 const cx = classNames.bind(styles)
 
 function Register() {
@@ -27,13 +27,14 @@ function Register() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
     const [image, setImage] = useState(null);
-    // const [repeatPassword, setRepeatPassword] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
+    const [PasswordInputType, PasswordToggleIcon, togglePasswordVisibility] = usePasswordToggle();
+    const [RepeatPasswordInputType, RepeatPasswordToggleIcon, toggleRepeatPasswordVisibility] = usePasswordToggle();
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -51,6 +52,10 @@ function Register() {
         setPassword(e.target.value);
     };
 
+    const handleRepeatPasswordChange = (e) => {
+        setRepeatPassword(e.target.value);
+    };
+
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
     };
@@ -64,6 +69,11 @@ function Register() {
             return;
         }
 
+        if (repeatPassword !== password) {
+            setErrorMessage('Nhập lại mật khẩu không đúng!');
+            return;
+        }
+
         // Tạo formData để gửi dữ liệu và file
         const formData = new FormData();
         formData.append('name', name);
@@ -73,7 +83,7 @@ function Register() {
         formData.append('image', image);
 
         try {
-            const response = await axios.post('http://localhost:5000/register', formData, {
+            const response = await api.post('/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -169,6 +179,25 @@ function Register() {
             ),
             value: password,
             onChange: handlePasswordChange,
+            toggleVisibility: togglePasswordVisibility,
+            toggleIcon: PasswordToggleIcon,
+        },
+        {
+            id: 'repeat-password',
+            type: RepeatPasswordInputType,
+            label: (
+                <>
+                    Repeat Your Password{" "}
+                    <span
+                        style={{color: "red"}}
+                        dangerouslySetInnerHTML={{__html: "*"}}
+                    />
+                </>
+            ),
+            value: repeatPassword,
+            onChange: handleRepeatPasswordChange,
+            toggleVisibility: toggleRepeatPasswordVisibility,
+            toggleIcon: RepeatPasswordToggleIcon,
         },
         {
             id: 'image',
@@ -218,11 +247,15 @@ function Register() {
                                         onChange={form.onChange}
                                         autoFocus={form.id === 'name'}
                                     >
-                                        {form.id === 'password' && password && (
-                                            <span className={cx('password-toogle-icon')} onClick={toggleVisibility}>
-                                                {ToggleIcon}
+                                        {((form.id === 'password' && password) || (form.id === 'repeat-password' && repeatPassword)) && (
+                                            <span
+                                                className={cx('password-toggle-icon')}
+                                                onClick={form.toggleVisibility}
+                                            >
+                                                {form.toggleIcon}
                                             </span>
                                         )}
+
                                     </MDBInput>
                                 ))}
 
