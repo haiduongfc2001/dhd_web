@@ -49,6 +49,7 @@ const ResetPassword = () => {
                 password: password,
                 user_id: user_id,
             });
+            setErrorMessage('');
             setNotificationMessage(response.data.message);
 
         } catch (error) {
@@ -114,7 +115,7 @@ const ResetPassword = () => {
                                     <p className={"text-danger"}>{errorMessage}</p>
                                 )}
                                 {notificationMessage && (
-                                    <p className={"text-danger"}>{notificationMessage}</p>
+                                    <p className={"text-success"}>{notificationMessage}</p>
                                 )}
 
                                 <MDBBtn
