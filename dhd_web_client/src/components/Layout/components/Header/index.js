@@ -149,7 +149,9 @@ function Header(props) {
                                 >
                                     <div className="logout-content">
                                         <FiLogOut className={cx('icon-logout')}/>
-                                        <span className={cx('logout-text')}>Logout</span>
+                                        <span className={cx('logout-text')}>
+                                            Đăng xuất
+                                        </span>
                                     </div>
                                 </Button>
                             ) : (
@@ -160,7 +162,9 @@ function Header(props) {
                                     >
                                         <div className="login-content">
                                             <FiLogIn className={cx('icon-login')}/>
-                                            <span className={cx('login-text')}>Log in</span>
+                                            <span className={cx('login-text')}>
+                                                Đăng nhập
+                                            </span>
                                         </div>
                                     </Button>
                                 </NavLink>

@@ -29,7 +29,8 @@ function SignIn() {
 
     const navigate = useNavigate();
 
-    const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
+    const [PasswordInputType, PasswordToggleIcon, togglePasswordVisibility] = usePasswordToggle();
+    // const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
@@ -142,7 +143,7 @@ function SignIn() {
                                     labelClass='text-black'
                                     label={
                                         <>
-                                            Email Address{" "}
+                                            Email{" "}
                                             <span
                                                 style={{color: "red"}}
                                                 dangerouslySetInnerHTML={{__html: "*"}}
@@ -162,7 +163,7 @@ function SignIn() {
                                     labelClass='text-black'
                                     label={
                                         <>
-                                            Your Password{" "}
+                                            Mật khẩu{" "}
                                             <span
                                                 style={{color: "red"}}
                                                 dangerouslySetInnerHTML={{__html: "*"}}
@@ -177,10 +178,10 @@ function SignIn() {
                                 >
                                     {password && (
                                         <span
-                                            className={cx('password-toogle-icon')}
-                                            onClick={toggleVisibility}
+                                            className={cx('password-toggle-icon')}
+                                            onClick={togglePasswordVisibility}
                                         >
-                                            {ToggleIcon}
+                                            {PasswordToggleIcon}
                                         </span>
                                     )}
                                 </MDBInput>
@@ -196,7 +197,7 @@ function SignIn() {
                                         className='text-black-100'
                                              to='/forgot-password'
                                     >
-                                        Forgot password
+                                        Quên mật khẩu
                                     </NavLink>
                                 </p>
 
@@ -207,13 +208,13 @@ function SignIn() {
                                     style={{backgroundColor: '#a69c9c', fontWeight: '600'}}
                                     onClick={handleLogin}
                                 >
-                                    Login
+                                    Đăng nhập
                                 </MDBBtn>
 
                                 <div className='mt-2'>
-                                    <p className="mb-0 mt-2">Haven't an account?
+                                    <p className="mb-0 mt-2">Bạn chưa có tài khoản
                                         <Link to="/register" className="text-black-50 fw-bold ms-1">
-                                            Register
+                                            Đăng ký
                                         </Link>
                                     </p>
                                 </div>

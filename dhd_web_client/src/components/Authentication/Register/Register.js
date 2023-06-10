@@ -125,7 +125,7 @@ function Register() {
             type: 'text',
             label: (
                 <>
-                    Your Name{" "}
+                    Tên của bạn{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -140,7 +140,7 @@ function Register() {
             type: 'email',
             label: (
                 <>
-                    Your Email{" "}
+                    Email{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -155,7 +155,7 @@ function Register() {
             type: 'text',
             label: (
                 <>
-                    Your Phone Number{" "}
+                    Số điện thoại{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -170,7 +170,7 @@ function Register() {
             type: PasswordInputType,
             label: (
                 <>
-                    Your Password{" "}
+                    Mật khẩu{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -187,7 +187,7 @@ function Register() {
             type: RepeatPasswordInputType,
             label: (
                 <>
-                    Repeat Your Password{" "}
+                    Nhập lại mật khẩu{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -204,7 +204,7 @@ function Register() {
             type: 'file',
             label: (
                 <>
-                    Avatar{" "}
+                    Ảnh đại diện{" "}
                     <span
                         style={{color: "red"}}
                         dangerouslySetInnerHTML={{__html: "*"}}
@@ -263,9 +263,9 @@ function Register() {
                                 {notificationMessage && <p className={'text-danger'}>{notificationMessage}</p>}
 
                                 <div>
-                                    <p className="mb-0 mt-2">Have an account?
+                                    <p className="mb-0 mt-2">Bạn đã có tài khoản?
                                         <Link to="/login" className="text-black-50 fw-bold ms-1">
-                                            Sign In
+                                            Đăng nhập
                                         </Link>
                                     </p>
                                 </div>
@@ -277,7 +277,7 @@ function Register() {
                                     style={{backgroundColor: '#a69c9c', fontWeight: '600'}}
                                     onClick={handleRegister}
                                 >
-                                    Register
+                                    Đăng ký
                                 </MDBBtn>
                             </MDBCardBody>
 

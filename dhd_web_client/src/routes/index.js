@@ -12,7 +12,7 @@ import Test from "~/test";
 export const publicRoutes = [
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: SignIn, layout: null },
-    { path: '/test', component: Test, layout: null },
+    // { path: '/test', component: Test, layout: null },
     { path: '/not-found', component: NotFound, layout: null },
     { path: '/', component: Home },
     { path: '/verify', component: EmailVerified, layout: null },
