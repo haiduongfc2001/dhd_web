@@ -141,4 +141,31 @@
   align-items: center;
 }
 
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+
+  & li {
+    text-decoration: none;
+    margin: 0 0.75em 0 0.75em;
+  }
+
+  &:hover .navbar-a {
+    color: #575757;
+  }
+
+  &:hover .navbar-a:hover {
+    color: #8EAAFB;
+    box-shadow: 0 2px 0 0 currentColor;
+  }
+
+  .navbar-a {
+    text-decoration: none;
+    color: white;
+    text-transform: none;
+    transition: 0.25s ease;
+  }
+}
+
 

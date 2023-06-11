@@ -1,23 +1,18 @@
-import classNames from "classnames/bind";
-import styles from "./Header.module.scss"
 import Tippy from '@tippyjs/react/headless';
 import logoDHD from "~/assets/images/logo_dhdadmin.png"
-import {BiBell} from "react-icons/bi";
 import {FiLogIn, FiLogOut} from "react-icons/fi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleXmark, faMagnifyingGlass, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {useContext, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
-import DigitClock from "~/components/Layout/components/DigitClock/DigitClock";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import api from "~/api/api";
 import {AuthContext} from "~/context/AuthContext";
-import {MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle} from "mdb-react-ui-kit";
+import {MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle} from "mdb-react-ui-kit";
+import {Image} from "react-bootstrap";
 
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import {Image, SplitButton} from "react-bootstrap";
-
+import classNames from "classnames/bind";
+import styles from "./Header.module.scss"
 const cx = classNames.bind(styles)
 
 function Header(props) {
@@ -30,29 +25,14 @@ function Header(props) {
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
         }
-    }, []);
+    });
 
     // useEffect(() => {
     //     if (user.id)
     // })
-
-
-    // useEffect(() => {
-    //     // Check if user object exists in local storage
-    //     const storedUser = localStorage.getItem('user');
-    //     if (storedUser) {
-    //         setUser(JSON.parse(storedUser));
-    //     }
-    // }, [setUser]);
-    //
-    // useEffect(() => {
-    //     const storedUser = localStorage.getItem("user");
-    //     if (storedUser) {
-    //         const parsedUser = JSON.parse(storedUser);
-    //         setUserImage(parsedUser.image);
-    //     }
-    // }, []);
 
 
     const handleLogout = async () => {
@@ -79,6 +59,19 @@ function Header(props) {
                         className={cx('logo-admin')}
                     />
                 </NavLink>
+
+                {/*<ul>*/}
+                {/*    <li>*/}
+                {/*        <NavLink className={cx('navbar-a')} to={'/'}>Home</NavLink>*/}
+                {/*    </li>*/}
+                {/*    <li>*/}
+                {/*        <NavLink className={cx('navbar-a')} to={'/'}>About</NavLink>*/}
+                {/*    </li>*/}
+                {/*    <li>*/}
+                {/*        <NavLink className={cx('navbar-a')} to={'/'}>News</NavLink>*/}
+                {/*    </li>*/}
+                {/*</ul>*/}
+
                 <Tippy
                     visible={searchResult.length > 0}
                     render={attrs => (
@@ -104,7 +97,7 @@ function Header(props) {
                     </div>
                 </Tippy>
 
-                {user.image !== undefined && (
+                {( user.image !== undefined && isLoggedIn === true ) && (
                     <MDBDropdown className='btn-group shadow-0'>
                         <div className='me-3'>
                             <Image
@@ -138,7 +131,7 @@ function Header(props) {
 
                 <div>
                     {/*<DigitClock />*/}
-                    <BiBell className={cx('icon-bell')}/>
+                    {/*<BiBell className={cx('icon-bell')}/>*/}
                     <div className={cx('ms-3 logout-container')}>
                         {isLoggedIn === true
                             ? (

@@ -10,10 +10,10 @@ import Profile from "~/pages/Profile/Profile";
 import Test from "~/test";
 
 export const publicRoutes = [
-    { path: '/register', component: Register, layout: null },
-    { path: '/login', component: SignIn, layout: null },
+    { path: '/register', component: Register },
+    { path: '/login', component: SignIn },
     // { path: '/test', component: Test, layout: null },
-    { path: '/not-found', component: NotFound, layout: null },
+    { path: '/not-found', component: NotFound },
     { path: '/', component: Home },
     { path: '/verify', component: EmailVerified, layout: null },
     { path: '/forgot-password', component: ForgotPassword, layout: null },

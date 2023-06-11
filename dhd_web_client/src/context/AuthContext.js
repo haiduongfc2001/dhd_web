@@ -10,10 +10,10 @@ export const AuthProvider = ({children}) => {
     const [userImage, setUserImage] = useState('');
 
     useEffect(() => {
+        const tokenUser = localStorage.getItem('token');
         const userId = localStorage.getItem('user_id');
-        console.log('userId: ', userId);
 
-        if (userId) {
+        if (userId && tokenUser) {
             api.get(`/user/${userId}`)
                 .then((response) => {
                     setUser(response.data);
@@ -21,8 +21,10 @@ export const AuthProvider = ({children}) => {
                 .catch((error) => {
                     console.log(error);
                 });
+        } else {
+            setUser({});
         }
-    }, [setUser]);
+    }, []); // Add an empty dependency array here
 
     return (
         <AuthContext.Provider
