@@ -4,11 +4,12 @@ import {useContext, useEffect, useState,} from "react";
 import {Card, Col, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
-import styles from './Home.module.scss'
-import classNames from "classnames/bind"
 import api from "~/api/api";
 import {NavLink, useNavigate} from "react-router-dom";
 
+import styles from './Home.module.scss'
+import classNames from "classnames/bind"
+import BreadcrumbExample from "~/pages/Home/BreadcrumbExample";
 const cx = classNames.bind(styles)
 
 function Home() {
@@ -46,9 +47,8 @@ function Home() {
 
     return (
         <div className={cx('wrapper')}>
-            {/*<BreadcrumbExample />*/}
-            Home
-            <br/><br/>
+            <BreadcrumbExample />
+            {/*Home*/}
 
             {/*<br/>*/}
             {/*<span>*/}

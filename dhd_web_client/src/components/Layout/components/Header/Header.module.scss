@@ -10,6 +10,9 @@
   display: flex;
   justify-content: center;
   //align-items: center;
+  background-color: #032541;
+  padding: 0 50px;
+  color: var(--white);
 }
 
 .wrapper div {
@@ -21,14 +24,15 @@
 .inner {
   height: 100%;
   //margin: 0 var(--default-margin);
-  width: var(--default-layout-width);
+  width: 100%; /* Update width to 100% */
   margin: 0;
-  padding: 20px;
-  background-color: #ffffff;
+  //padding: 20px;
+  background-color: #032541;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 
 .logo-admin {
   height: 50px;
@@ -50,7 +54,7 @@
   input {
     flex: 1;
     height: 100%;
-    color: var(--black);
+    color: var(--white);
     font-size: var(--default-font-size);
     caret-color: var(--primary);
     background-color: transparent;

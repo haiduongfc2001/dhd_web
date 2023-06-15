@@ -22,8 +22,8 @@ div.header.first div.single_column {
 }
 
 div.header div.single_column {
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: var(--default-padding);
+  padding-right: var(--default-padding);
 }
 
 div.single_column {

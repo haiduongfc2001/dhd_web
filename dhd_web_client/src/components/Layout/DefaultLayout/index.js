@@ -9,26 +9,26 @@ const cx = classNames.bind(styles)
 
 function DefaultLayout({ children }) {
     return (
-        // <div className={cx('wrapper')}>
-        //     <Header/>
-        //     <div className={cx('container')}>
-        //         {/*<Sidebar/>*/}
-        //         <div className={cx('content')}>
-        //             {children}
-        //         </div>
-        //     </div>
-        //
-        //     {/*<ToastContainer />*/}
-        // </div>
+        <div className={cx('wrapper')}>
+            <Header/>
+            <div className={cx('container')}>
+                {/*<Sidebar/>*/}
+                <div className={cx('content')}>
+                    {children}
+                </div>
+            </div>
 
-        <Container>
-            <Row>
-                <Header/>
-            </Row>
-            <Row className={cx('content')}>
-                {children}
-            </Row>
-        </Container>
+            {/*<ToastContainer />*/}
+        </div>
+
+        // <Container>
+        //     <Row>
+        //         <Header/>
+        //     </Row>
+        //     <Row className={cx('content')}>
+        //         {children}
+        //     </Row>
+        // </Container>
 
     )
 }

@@ -3,11 +3,15 @@
   //font-size: 1.8rem;
 }
 
-//.breadcrumb {
-//  font-size: 1.8rem;
-//}
+.breadcrumb {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0 var(--default-padding);
+}
 
 .card-movies {
+  background-color: rebeccapurple;
+  padding: 10px 27px;
 
   .col-movie {
     display: flex;
