@@ -16,8 +16,9 @@ import {toast, ToastContainer} from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
 
 import classNames from "classnames/bind";
-import styles from "../Authentication.module.scss";
+import styles from "./SignIn.module.scss";
 import api from "~/api/api";
+import Header from "~/components/Layout/components/Header";
 const cx = classNames.bind(styles)
 
 function SignIn() {
@@ -122,6 +123,8 @@ function SignIn() {
 
     return (
         <div className={cx('wrapper')}>
+            <Header />
+
             <MDBContainer fluid className={cx('signin-form')}>
                 <MDBRow className='d-flex justify-content-center align-items-center h-100'>
                     <MDBCol col='12'>

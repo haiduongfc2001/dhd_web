@@ -16,7 +16,8 @@ import usePasswordToggle from "~/hooks/usePasswordToggle";
 import api from "~/api/api";
 
 import classNames from "classnames/bind";
-import styles from "../Authentication.module.scss";
+import styles from "./Register.module.scss";
+import Header from "~/components/Layout/components/Header";
 const cx = classNames.bind(styles)
 
 function Register() {
@@ -217,6 +218,8 @@ function Register() {
 
     return (
         <div className={cx('wrapper')}>
+            <Header />
+
             <MDBContainer fluid className={cx('signin-form')}>
                 <MDBRow className='d-flex justify-content-center align-items-center h-100'>
                     <MDBCol col='12'>
@@ -230,7 +233,7 @@ function Register() {
                                     className={cx('logo-admin')}
                                 />
                                 <p className="text-black-150 mt-3 mb-3">
-                                    Vui lòng đăng ký tài khoản!
+                                    Đăng ký tài khoản!
                                 </p>
 
                                 {formRegisterArray.map((form, index) => (

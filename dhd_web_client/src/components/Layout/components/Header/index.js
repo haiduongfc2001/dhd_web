@@ -42,6 +42,7 @@ function Header(props) {
             // Xóa token trong localStorage (hoặc sessionStorage)
             localStorage.removeItem('token');
             localStorage.removeItem('user_id');
+            localStorage.removeItem('userRatings');
 
             navigate('/login'); // Chuyển hướng đến trang đăng nhập
         } catch (error) {

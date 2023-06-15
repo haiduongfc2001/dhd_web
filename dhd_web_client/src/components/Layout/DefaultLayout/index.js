@@ -1,10 +1,10 @@
-import classNames from "classnames/bind"
-import styles from "./DefaultLayout.module.scss"
 import Sidebar from "./Sidebar";
 import Header from "~/components/Layout/components/Header";
 import {ToastContainer} from "react-toastify";
 import {Container, Row} from "react-bootstrap";
 
+import classNames from "classnames/bind"
+import styles from "./DefaultLayout.module.scss"
 const cx = classNames.bind(styles)
 
 function DefaultLayout({ children }) {

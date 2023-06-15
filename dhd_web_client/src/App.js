@@ -4,6 +4,7 @@ import DefaultLayout from '~/components/Layout/DefaultLayout'
 import "~/components/GlobalStyles/GlobalStyles.scss"
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-circular-progressbar/dist/styles.css';
 import {publicRoutes, privateRoutes} from '~/routes';
 import {AuthContext} from "~/context/AuthContext";
 

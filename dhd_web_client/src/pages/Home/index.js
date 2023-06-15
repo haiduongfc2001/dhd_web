@@ -7,21 +7,42 @@ import Button from "react-bootstrap/Button";
 import styles from './Home.module.scss'
 import classNames from "classnames/bind"
 import api from "~/api/api";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const cx = classNames.bind(styles)
 
 function Home() {
-    const {user, setUser} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const {user, setUser, isLoggedIn} = useContext(AuthContext);
 
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
+        console.log(isLoggedIn);
         api.get('/movies')
             .then(response => {
                 setMovies(response.data);
             })
             .catch(err => console.log(err.message));
-    });
+    }, [isLoggedIn]);
+
+
+    // const handleMovieInfo = async (movie) => {
+    //     try {
+    //
+    //         console.log(movie._id);
+    //
+    //         const response = await api.get(`/movie/${movie._id}`);
+    //
+    //         const movieInfo = response.data;
+    //         console.log(movieInfo);
+    //
+    //         navigate(`movie/${movie._id}`);
+    //
+    //     } catch (err) {
+    //         console.log(err.message);
+    //     }
+    // }
 
     return (
         <div className={cx('wrapper')}>
@@ -50,28 +71,25 @@ function Home() {
                                     // style={{width: '150px', height: '250px'}}
                                 />
                                 <Card.Body className="d-flex flex-column justify-content-between mt-2 mb-2">
-                                    <Card.Title className={cx('card-title')}>
-                                        {movie.title}
-                                    </Card.Title>
+                                    <NavLink to={`/movie/${movie._id}`}>
+                                        <Card.Title
+                                            className={cx('card-title')}
+                                        >
+                                            {movie.title}
+                                        </Card.Title>
+                                    </NavLink>
                                     <Card.Text
-                                        className={cx('mb-4 card-text')}
-                                        style={{
-                                            maxHeight: "6em",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            display: "-webkit-box",
-                                            WebkitLineClamp: "3",
-                                            WebkitBoxOrient: "vertical",
-                                        }}
+                                        className={cx('mb-4', 'card-text')}
                                     >
                                         {movie.overview}
                                     </Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        size="lg"
-                                    >
-                                        Rate
-                                    </Button>
+                                    <div className="text-center"> {/* Add this wrapper div */}
+                                        <NavLink to={`/movie/${movie._id}`}>
+                                            <Button variant="primary" size="lg">
+                                                Xem chi tiết
+                                            </Button>
+                                        </NavLink>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>

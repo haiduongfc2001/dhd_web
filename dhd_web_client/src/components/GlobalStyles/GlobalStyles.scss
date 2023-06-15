@@ -37,11 +37,22 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: var(--default-font-size);
+  //font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', 'Source Sans Pro', Arial, sans-serif;
+  //font-size: var(--default-font-size);
   line-height: 1.5;
   text-rendering: optimizeSpeed;
   color: var(--text-color);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  height: auto;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  //overflow: hidden;
 
   ///* fallback for old browsers */
   //background: #6a11cb;

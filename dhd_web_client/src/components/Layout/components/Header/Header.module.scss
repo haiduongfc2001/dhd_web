@@ -20,8 +20,10 @@
 
 .inner {
   height: 100%;
-  margin: 0 var(--default-margin);
+  //margin: 0 var(--default-margin);
   width: var(--default-layout-width);
+  margin: 0;
+  padding: 20px;
   background-color: #ffffff;
   display: flex;
   align-items: center;
