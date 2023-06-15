@@ -13,6 +13,7 @@ import {AuthContext} from "~/context/AuthContext";
 import classNames from "classnames/bind";
 import styles from "./MovieInfo.module.scss";
 import {toast, ToastContainer} from "react-toastify";
+import BreadcrumbExample from "~/pages/Home/BreadcrumbExample";
 
 const cx = classNames.bind(styles);
 
@@ -117,8 +118,12 @@ function MovieInfo() {
 
     return (
         <div>
+            <BreadcrumbExample
+                movie={movie}
+            />
+
             <div
-                className={cx('mt-5', 'mb-5', 'header', 'large', 'border', 'first')}
+                className={cx('mt-2', 'mb-5', 'header', 'large', 'border', 'first')}
                 style={{
                     borderBottom: '1px solid rgba(31.5, 10.5, 10.5, 1)',
                     backgroundPosition: 'left calc((42vw - 170px) - 340px) top',
