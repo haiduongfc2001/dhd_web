@@ -5,7 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 function CircularProgressBarVote({ value }) {
     return (
         <div
-            style={{ width: "60px", height: '60px' }}
+            style={{ width: "60px", height: '60px', backgroundColor: '#204529', borderRadius: '50%' }}
             className={'me-3'}
         >
             <CircularProgressbar
@@ -15,6 +15,7 @@ function CircularProgressBarVote({ value }) {
                 styles={{
                     root: {
                         width: "100%",
+                        height: "100%",
                     },
                     path: {
                         stroke: "#18e21b",
@@ -28,6 +29,7 @@ function CircularProgressBarVote({ value }) {
                     text: {
                         fill: "#d6d6d6",
                         fontSize: "24px",
+                        fontWeight: "bold",
                         dominantBaseline: "middle",
                         textAnchor: "middle",
                     },
