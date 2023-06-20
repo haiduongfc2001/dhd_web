@@ -10,6 +10,11 @@ import {NavLink, useNavigate} from "react-router-dom";
 import styles from './Home.module.scss'
 import classNames from "classnames/bind"
 import BreadcrumbExample from "~/pages/Home/BreadcrumbExample";
+import CircularProgressBarVote from "~/components/CircularProgressBar/CircularProgressBar";
+import {CircularProgressbar} from "react-circular-progressbar";
+import convertMovieTitle from "~/hooks/convertMovieTitle";
+import ControlledCarousel from "~/components/ControlledCarousel/ControlledCarousel";
+
 const cx = classNames.bind(styles)
 
 function Home() {
@@ -47,7 +52,7 @@ function Home() {
 
     return (
         <div className={cx('wrapper')}>
-            <BreadcrumbExample />
+            <BreadcrumbExample/>
             {/*Home*/}
 
             {/*<br/>*/}
@@ -55,7 +60,10 @@ function Home() {
             {/*    Username: {user.name}*/}
             {/*</span>*/}
 
-            <div className={cx("card-movies")}>
+
+            <ControlledCarousel />
+
+            <div className={cx("card-movie")}>
                 <Row xs={1} md={2} lg={4} className="g-4 mb-10 mt-10">
                     {movies.map((movie) => (
                         <Col key={movie._id} className={cx('col-movie')}>
@@ -70,6 +78,17 @@ function Home() {
                                     className={cx('card-image')}
                                     // style={{width: '150px', height: '250px'}}
                                 />
+                                {
+                                    movie.vote_average_user !== 0 && (
+                                        <div className={cx('user-score')}>
+                                            <CircularProgressBarVote
+                                                value={(movie.vote_average_user * 10)}
+                                                text={`${(movie.vote_average_user * 10)}%`}
+                                                // className={cx('me-3', 'user-score-percent')}
+                                            />
+                                        </div>
+                                    )
+                                }
                                 <Card.Body className="d-flex flex-column justify-content-between mt-2 mb-2">
                                     <NavLink to={`/movie/${movie._id}`}>
                                         <Card.Title

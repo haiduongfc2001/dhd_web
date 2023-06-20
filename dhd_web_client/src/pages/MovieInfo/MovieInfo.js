@@ -73,8 +73,10 @@ function MovieInfo() {
                 const response = await api.post(`/movie/${_id}/rating`, ratingData);
                 setUserRating(response.data.rating);
 
-                const userRatings = JSON.parse(localStorage.getItem("userRatings")) || {}; // Lấy giá trị userRatings từ localStorage, nếu không có thì tạo một đối tượng mới
-                userRatings[_id] = newRating; // Cập nhật giá trị rating vào đối tượng userRatings dựa trên khóa định danh của phim
+                // Lấy giá trị userRatings từ localStorage, nếu không có thì tạo một đối tượng mới
+                const userRatings = JSON.parse(localStorage.getItem("userRatings")) || {};
+                // Cập nhật giá trị rating vào đối tượng userRatings dựa trên khóa định danh của phim
+                userRatings[_id] = newRating;
                 localStorage.setItem("userRatings", JSON.stringify(userRatings)); // Cập nhật lại giá trị userRatings trong localStorage
 
                 toast.success('Đánh giá thành công!',
@@ -188,7 +190,11 @@ function MovieInfo() {
                                                 movie.vote_count_user !== 0
                                                     ? (
                                                         <span>
-                                                            (Được đánh giá bởi {movie.vote_count_user} người dùng)
+                                                            (Đánh giá
+                                                            &nbsp;
+                                                            <b>{movie.vote_average_user}/10</b>
+                                                            &nbsp;
+                                                            bởi <b>{movie.vote_count_user}</b> người dùng)
                                                         </span>
                                                     )
                                                     : (

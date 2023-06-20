@@ -113,9 +113,17 @@ function Header(props) {
                         <MDBDropdownToggle split></MDBDropdownToggle>
                         <MDBDropdownMenu>
                             <MDBDropdownItem className='ms-3 mt-2 mb-2'>
-                                <Link to="/profile" className="dropdown-link">
-                                    Hồ sơ
-                                </Link>
+                                {/*<Link to="/profile" className="dropdown-link">*/}
+                                {/*    Hồ sơ*/}
+                                {/*</Link>*/}
+                                <Button
+                                    // onClick={handleAllMovies}
+                                    value={'All Movies'}
+                                >
+                                    <Link to="/profile">
+                                        Hồ sơ
+                                    </Link>
+                                </Button>
                             </MDBDropdownItem>
                             <MDBDropdownItem
                                 className='ms-3 mb-2'
