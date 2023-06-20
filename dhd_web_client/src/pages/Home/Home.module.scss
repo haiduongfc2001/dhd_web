@@ -11,9 +11,10 @@
   padding: 0 var(--default-padding);
 }
 
-.card-movies {
+.card-movie {
   background-color: rebeccapurple;
   padding: 10px calc((100% - 30rem * 4) / 2);
+  color: var(--black);
 
   .col-movie {
     display: flex;
@@ -36,6 +37,14 @@
         border-top-left-radius: 16px;
         object-fit: fill;
         cursor: pointer;
+      }
+
+      .user-score {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        //width: 50px;
+        //height: 50px;
       }
 
       .card-title {
