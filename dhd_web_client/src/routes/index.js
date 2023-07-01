@@ -9,6 +9,7 @@ import EmailVerified from "~/components/Authentication/EmailVerified";
 import Profile from "~/pages/Profile/Profile";
 import MovieInfo from "~/pages/MovieInfo/MovieInfo";
 import Test from "~/test";
+import SearchMovies from "~/pages/SearchMovies/SearchMovies";
 
 export const publicRoutes = [
     { path: '/register', component: Register, layout: null },
@@ -20,7 +21,8 @@ export const publicRoutes = [
     { path: '/forgot-password', component: ForgotPassword, layout: null },
     { path: '/reset-password', component: ResetPassword, layout: null },
     { path: '/profile', component: Profile },
-    { path: '/movie/:_id', component: MovieInfo }
+    { path: '/movie/:_id', component: MovieInfo },
+    { path: '/search', component: SearchMovies }
 ]
 
 // Private Routes
