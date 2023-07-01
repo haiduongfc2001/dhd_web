@@ -32,7 +32,7 @@ function BreadcrumbExample({movie}) {
                     </Breadcrumb>
                 ) : (
                     <Breadcrumb className={cx('breadcrumb')}>
-                        <Breadcrumb.Item href="/">
+                        <Breadcrumb.Item>
                             Home
                         </Breadcrumb.Item>
                     </Breadcrumb>
