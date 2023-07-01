@@ -31,8 +31,12 @@ const ForgotPassword = () => {
             const response = await api.post('/forget', {email});
             setNotificationMessage(response.data.message);
 
-        } catch (err) {
-
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage('Server error');
+            }
         }
     }
 
