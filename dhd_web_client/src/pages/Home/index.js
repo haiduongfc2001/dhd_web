@@ -22,6 +22,7 @@ function Home() {
     const {user, setUser, isLoggedIn} = useContext(AuthContext);
 
     const [movies, setMovies] = useState([]);
+    const [visibleMovies, setVisibleMovies] = useState(8); // Số phim hiển thị ban đầu
 
     useEffect(() => {
         console.log(isLoggedIn);
@@ -30,7 +31,12 @@ function Home() {
                 setMovies(response.data);
             })
             .catch(err => console.log(err.message));
-    }, [isLoggedIn]);
+    }, [isLoggedIn, setMovies]);
+
+    const handleLoadMore = () => {
+        // Tăng số lượng phim hiển thị khi nhấp vào nút "Xem thêm"
+        setVisibleMovies(prevVisibleMovies => prevVisibleMovies + 8);
+    }
 
 
     // const handleMovieInfo = async (movie) => {
@@ -65,7 +71,9 @@ function Home() {
 
             <div className={cx("card-movie")}>
                 <Row xs={1} md={2} lg={4} className="g-4 mb-10 mt-10">
-                    {movies.map((movie) => (
+                    {movies
+                        .slice(0, visibleMovies)
+                        .map((movie) => (
                         <Col key={movie._id} className={cx('col-movie')}>
                             <Card className={cx('custom-card')}>
                                 <Card.Img
@@ -114,6 +122,19 @@ function Home() {
                         </Col>
                     ))}
                 </Row>
+                {
+                    visibleMovies < movies.length && (
+                        <div className="text-center">
+                            <Button
+                                className={cx('load-more')}
+                                    onClick={handleLoadMore}
+                                size={"lg"}
+                            >
+                                Xem thêm
+                            </Button>
+                        </div>
+                    )
+                }
             </div>
 
             <ToastContainer/>
