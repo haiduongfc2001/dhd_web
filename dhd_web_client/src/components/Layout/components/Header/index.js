@@ -3,7 +3,7 @@ import logoDHD from "~/assets/images/logo_dhdadmin.png"
 import {FiLogIn, FiLogOut} from "react-icons/fi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleXmark, faMagnifyingGlass, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import api from "~/api/api";
@@ -13,11 +13,15 @@ import {Image} from "react-bootstrap";
 
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss"
+
 const cx = classNames.bind(styles)
 
 function Header(props) {
+    const [searchTerm, setSearchTerm] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const navigate = useNavigate();
+    const [searchInput, setSearchInput] = useState('');
+    const searchInputRef = useRef(null);
 
     const {isLoggedIn, setIsLoggedIn, user} = useContext(AuthContext);
 
@@ -30,10 +34,24 @@ function Header(props) {
         }
     });
 
-    // useEffect(() => {
-    //     if (user.id)
-    // })
+    const handleClearSearch = () => {
+        setSearchInput('');
+        searchInputRef.current.focus();
+    }
 
+    const handleSearch = () => {
+        navigate(`/search?q=${encodeURIComponent(searchInput)}`);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    }
+
+    const handleProfile = () => {
+        navigate('/profile');
+    }
 
     const handleLogout = async () => {
         try {
@@ -74,65 +92,71 @@ function Header(props) {
                 {/*</ul>*/}
 
                 <Tippy
-                    visible={searchResult.length > 0}
-                    render={attrs => (
-                        <div className={cx('search-results')} tabIndex={-1} {...attrs}>
-                            Kết quả
-                        </div>
-                    )}
+                    // visible={searchResult.length > 0}
+                    // render={attrs => (
+                    //     <div className={cx('search-results')} tabIndex={-1} {...attrs}>
+                    //         Kết quả
+                    //     </div>
+                    // )}
                 >
                     <div className={cx('search')}>
                         <input
                             placeholder="Search ..."
                             spellCheck={false}
+                            value={searchInput}
+                            onChange={e => setSearchInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            ref={searchInputRef}
                         />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark}/>
-                        </button>
-                        {/*Loading*/}
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner}/>
+                        {
+                            searchInput.length > 0 && (
+                                <button
+                                    className={cx('clear')}
+                                    onClick={handleClearSearch}
+                                >
+                                    <FontAwesomeIcon icon={faCircleXmark}/>
+                                </button>
+                            )
+                        }
 
-                        <button className={cx('search-btn')}>
+                        {/*Loading*/}
+                        {/*<FontAwesomeIcon className={cx('loading')} icon={faSpinner}/>*/}
+
+                        <button className={cx('search-btn')} onClick={handleSearch}>
                             <FontAwesomeIcon icon={faMagnifyingGlass}/>
                         </button>
                     </div>
                 </Tippy>
 
-                {( user.image !== undefined && isLoggedIn === true ) && (
+                {(user.image !== undefined && isLoggedIn === true) && (
                     <MDBDropdown className='btn-group shadow-0'>
                         <div className='me-3'>
                             <Image
                                 src={`${api.defaults.baseURL}/userImages/${user.image}`}
                                 alt="avatar"
                                 roundedCircle
-                                style={{ width: "45px", height: "45px" }}
+                                style={{width: "45px", height: "45px"}}
                                 className="me-3"
                             />
                             <p className='text-black-150 mb-0'>{user.email}</p>
                         </div>
                         <MDBDropdownToggle split></MDBDropdownToggle>
-                        <MDBDropdownMenu>
-                            <MDBDropdownItem className='ms-3 mt-2 mb-2'>
-                                {/*<Link to="/profile" className="dropdown-link">*/}
-                                {/*    Hồ sơ*/}
-                                {/*</Link>*/}
+                        <MDBDropdownMenu className={cx('button-dropdown')}>
+                            <MDBDropdownItem className='ms-3 mt-2 mb-2' style={{width: '100%'}}>
                                 <Button
-                                    // onClick={handleAllMovies}
-                                    value={'All Movies'}
+                                    onClick={handleProfile}
+                                    value='Profile'
                                 >
-                                    <Link to="/profile">
-                                        Hồ sơ
-                                    </Link>
+                                    Hồ sơ
                                 </Button>
                             </MDBDropdownItem>
-                            <MDBDropdownItem
-                                className='ms-3 mb-2'
-                                style={{cursor: 'pointer'}}
-                                onClick={handleLogout}
-                            >
-                                <Link to={''}>
+                            <MDBDropdownItem className='ms-3 mt-2 mb-2'>
+                                <Button
+                                    onClick={handleLogout}
+                                    value='Logout'
+                                >
                                     Đăng xuất
-                                </Link>
+                                </Button>
                             </MDBDropdownItem>
                         </MDBDropdownMenu>
                     </MDBDropdown>
