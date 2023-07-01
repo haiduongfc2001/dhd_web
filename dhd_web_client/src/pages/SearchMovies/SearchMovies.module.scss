@@ -1,0 +1,94 @@
+.wrapper {
+  //margin: var(--default-margin);
+  //font-size: 1.8rem;
+
+  --width-card: 24rem;
+}
+
+.search-results {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0 var(--default-padding);
+}
+
+.card-movie {
+  background-color: rebeccapurple;
+  padding: 10px calc((100% - 30rem * 4) / 2);
+  color: var(--black);
+
+  .col-movie {
+    display: flex;
+    justify-content: center;
+
+    .custom-card {
+      width: var(--width-card);
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-image {
+        height: 26rem;
+        border-top-right-radius: 16px;
+        border-top-left-radius: 16px;
+        object-fit: fill;
+        cursor: pointer;
+      }
+
+      .user-score {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        //width: 50px;
+        //height: 50px;
+      }
+
+      .card-title {
+        font-size: 20px;
+
+        max-height: 6em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .card-text {
+        font-size: 12px;
+
+        max-height: 6em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+
+}
+
+.load-more {
+  position: relative;
+  bottom: 32px;
+
+  &:hover {
+    border: none;
+    /* fallback for old browsers */
+    background: #6a11cb !important;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1)) !important;
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1)) !important;
+    transition: all 0.5s ease-in;
+  }
+}
+
+
