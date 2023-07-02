@@ -14,6 +14,7 @@ import classNames from "classnames/bind";
 import styles from "./MovieInfo.module.scss";
 import {toast, ToastContainer} from "react-toastify";
 import BreadcrumbExample from "~/pages/Home/BreadcrumbExample";
+import {Card, Col, Row} from "react-bootstrap";
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +22,16 @@ function MovieInfo() {
     const {_id} = useParams();
     const [movie, setMovie] = useState(null);
     const [userRating, setUserRating] = useState(0);
+    const [featuredMovies, setFeaturedMovies] = useState([]);
+
+    useEffect(() => {
+        api.get('/movies')
+            .then(response => {
+                const sortedMovies = response.data.sort((a, b) => b.vote_average_user - a.vote_average_user);
+                const top4Movies = sortedMovies.slice(0, 4);
+                setFeaturedMovies(top4Movies);
+            })
+    }, [setFeaturedMovies]);
 
     const {user, isLoggedIn} = useContext(AuthContext);
 
@@ -134,7 +145,8 @@ function MovieInfo() {
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: `url(${movie.poster_path.startsWith("/")
                         ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
-                        : movie.poster_path})`
+                        : movie.poster_path})`,
+                    borderRadius: 'var(--default-border-radius)'
                 }}
 
             >
@@ -233,6 +245,58 @@ function MovieInfo() {
                         </section>
                     </div>
                 </div>
+            </div>
+
+            <div className={cx('featured-movies')}>
+                <h2>Phim nổi bật</h2>
+                {featuredMovies.length > 0 && (
+                    <div className={cx("card-movie")}>
+                        <Row xs={1} md={2} lg={4} className="g-4 mb-10 mt-10">
+                            {featuredMovies.map((movie) => (
+                                <Col key={movie._id} className={cx("col-movie")}>
+                                    <Card className={cx("custom-card")}>
+                                        <Card.Img
+                                            variant="top"
+                                            src={
+                                                movie.poster_path.startsWith("/")
+                                                    ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
+                                                    : movie.poster_path
+                                            }
+                                            className={cx("card-image")}
+                                            // style={{width: '150px', height: '250px'}}
+                                        />
+                                        {movie.vote_average_user !== 0 && (
+                                            <div className={cx("user-score")}>
+                                                <CircularProgressBarVote
+                                                    value={movie.vote_average_user * 10}
+                                                    text={`${movie.vote_average_user * 10}%`}
+                                                    // className={cx('me-3', 'user-score-percent')}
+                                                />
+                                            </div>
+                                        )}
+                                        <Card.Body className="d-flex flex-column justify-content-between mt-2 mb-2">
+                                            <NavLink to={`/movie/${movie._id}`}>
+                                                <Card.Title className={cx("card-title")}>
+                                                    {movie.title}
+                                                </Card.Title>
+                                            </NavLink>
+                                            <Card.Text className={cx("mb-4", "card-text")}>
+                                                {movie.overview}
+                                            </Card.Text>
+                                            <div className="text-center">
+                                                <NavLink to={`/movie/${movie._id}`}>
+                                                    <Button variant="primary" size="lg">
+                                                        Xem chi tiết
+                                                    </Button>
+                                                </NavLink>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
+                    </div>
+                )}
             </div>
 
             <ToastContainer/>
