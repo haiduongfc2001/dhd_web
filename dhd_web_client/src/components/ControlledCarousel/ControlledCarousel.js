@@ -24,7 +24,7 @@ function ControlledCarousel() {
                 setCarouselMovies(top5Movies);
             })
             .catch(err => console.log(err.message));
-    });
+    }, [setCarouselMovies]);
 
     return (
         <div className={cx('carousel-wrapper')}>
