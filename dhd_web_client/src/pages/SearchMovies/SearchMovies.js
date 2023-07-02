@@ -83,7 +83,7 @@ const SearchMovies = () => {
                     </Row>
                 </div>
             ) : (
-                <p>No search results</p>
+                <h1 className={cx('not-found')}>Không tìm thấy</h1>
             )}
         </div>
     );

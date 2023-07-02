@@ -91,4 +91,13 @@
   }
 }
 
+.not-found {
+  height: 200px;
+  color: red;
+  background-color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--default-margin-top);
+}
 
