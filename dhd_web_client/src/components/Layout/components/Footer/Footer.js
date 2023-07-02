@@ -8,10 +8,10 @@ const Footer = () => {
     return (
         <footer className={cx("footer")}>
             <div className={cx("container")}>
-                <p className={cx("copyright", "me-3")}>
+                <div className={cx("copyright", "me-3")}>
                     2023
                     <h2 className={'ms-2'}>DHD</h2>
-                </p>
+                </div>
                 <div className={cx("contact-info")}>
                     <p>Email: haiduongfc2001@gmail.com</p>
                     <p>Phone: +84 123-456-789</p>
