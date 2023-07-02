@@ -135,168 +135,172 @@ function MovieInfo() {
                 movie={movie}
             />
 
-            <div
-                className={cx('mt-2', 'mb-5', 'header', 'large', 'border', 'first')}
-                style={{
-                    borderBottom: '1px solid rgba(31.5, 10.5, 10.5, 1)',
-                    backgroundPosition: 'left calc((42vw - 170px) - 340px) top',
-                    // calc((14vw - 170px) - 340px)
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundImage: `url(${movie.poster_path.startsWith("/")
-                        ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
-                        : movie.poster_path})`,
-                    borderRadius: 'var(--default-border-radius)'
-                }}
+            <div style={{backgroundColor: '#c8cbcb'}}>
+                <div
+                    className={cx('mt-2', 'mb-5', 'header', 'large', 'border', 'first')}
+                    style={{
+                        borderBottom: '1px solid rgba(31.5, 10.5, 10.5, 1)',
+                        backgroundPosition: 'left calc((42vw - 170px) - 340px) top',
+                        // calc((14vw - 170px) - 340px)
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundImage: `url(${movie.poster_path.startsWith("/")
+                            ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
+                            : movie.poster_path})`,
+                        borderRadius: 'var(--default-border-radius)'
+                    }}
 
-            >
-                <div className={cx('keyboard_s', 'custom_bg')}>
-                    <div className={cx('single_column')}>
-                        <section id='original_header' className={cx('images', 'inner')}>
-                            <div className={cx('poster_wrapper')}>
-                                <img
-                                    src={
-                                        movie.poster_path.startsWith("/")
-                                            ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
-                                            : movie.poster_path
-                                    }
-                                    alt={movie.title}
-                                />
-                            </div>
-                            <div className={cx('header_poster_wrapper')}>
-                                <section className={cx('header', 'poster')}>
-                                    <div className={cx('title')}>
-                                        <h2>
-                                            <NavLink to={`/movie/${movie._id}`}>
+                >
+                    <div className={cx('keyboard_s', 'custom_bg')}>
+                        <div className={cx('single_column')}>
+                            <section id='original_header' className={cx('images', 'inner')}>
+                                <div className={cx('poster_wrapper')}>
+                                    <img
+                                        src={
+                                            movie.poster_path.startsWith("/")
+                                                ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
+                                                : movie.poster_path
+                                        }
+                                        alt={movie.title}
+                                    />
+                                </div>
+                                <div className={cx('header_poster_wrapper')}>
+                                    <section className={cx('header', 'poster')}>
+                                        <div className={cx('title')}>
+                                            <h2>
+                                                <NavLink to={`/movie/${movie._id}`}>
                                                 <span className={cx('movie-title')}>
                                                     {movie.title}
                                                 </span>
-                                            </NavLink>
-                                            <span className={cx('ms-2', 'release-year')}>
+                                                </NavLink>
+                                                <span className={cx('ms-2', 'release-year')}>
                                                 ({getReleaseYear(movie.release_date)})
                                             </span>
-                                        </h2>
-                                        <div className={cx('facts')}>
+                                            </h2>
+                                            <div className={cx('facts')}>
                                             <span className={cx('release-date')}>
                                                 {formatReleaseDate(movie.release_date)}
                                             </span>
-                                            <span className={cx('genres')}>
+                                                <span className={cx('genres')}>
                                                 {movie.genres.map((genre, index) => (
                                                     genre.name
                                                 )).join(', ')
                                                 }
                                             </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className={cx('mt-3', 'mb-5', 'user-score')}>
-                                        <CircularProgressBarVote
-                                            value={(movie.vote_average_user * 10)}
-                                            text={`${(movie.vote_average_user * 10)}%`}
-                                            className={cx('me-3', 'user-score-percent')}
-                                        />
-                                        <div>
-                                            <h2>
-                                                User Score
-                                            </h2>
-                                            {
-                                                movie.vote_count_user !== 0
-                                                    ? (
-                                                        <span>
+                                        <div className={cx('mt-3', 'mb-5', 'user-score')}>
+                                            <CircularProgressBarVote
+                                                value={(movie.vote_average_user * 10)}
+                                                text={`${(movie.vote_average_user * 10)}%`}
+                                                className={cx('me-3', 'user-score-percent')}
+                                            />
+                                            <div>
+                                                <h2>
+                                                    User Score
+                                                </h2>
+                                                {
+                                                    movie.vote_count_user !== 0
+                                                        ? (
+                                                            <span>
                                                             (Đánh giá
-                                                            &nbsp;
-                                                            <b>{movie.vote_average_user}/10</b>
-                                                            &nbsp;
-                                                            bởi <b>{movie.vote_count_user}</b> người dùng)
+                                                                &nbsp;
+                                                                <b>{movie.vote_average_user}/10</b>
+                                                                &nbsp;
+                                                                bởi <b>{movie.vote_count_user}</b> người dùng)
                                                         </span>
-                                                    )
-                                                    : (
-                                                        <span>
+                                                        )
+                                                        : (
+                                                            <span>
                                                             (Chưa có đánh giá)
                                                         </span>
-                                                    )
-                                            }
+                                                        )
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className={cx('header-info')}>
-                                        <div className={cx('overview')}>
-                                            <h3>Overview</h3>
-                                            <p>{movie.overview}</p>
+                                        <div className={cx('header-info')}>
+                                            <div className={cx('overview')}>
+                                                <h3>Overview</h3>
+                                                <p>{movie.overview}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <h2 className={'mt-5'}>
-                                            Rate
-                                        </h2>
                                         <div>
-                                            <ReactStars
-                                                size={50}
-                                                count={10}
-                                                isHalf={false}
-                                                emptyIcon={<AiFillStar/>}
-                                                fullIcon={<AiFillStar/>}
-                                                onChange={ratingChanged}
-                                                value={userRating}
-                                                activeColor="#ffd700"
-                                            />
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-
-            <div className={cx('featured-movies')}>
-                <h2>Phim nổi bật</h2>
-                {featuredMovies.length > 0 && (
-                    <div className={cx("card-movie")}>
-                        <Row xs={1} md={2} lg={4} className="g-4 mb-10 mt-10">
-                            {featuredMovies.map((movie) => (
-                                <Col key={movie._id} className={cx("col-movie")}>
-                                    <Card className={cx("custom-card")}>
-                                        <Card.Img
-                                            variant="top"
-                                            src={
-                                                movie.poster_path.startsWith("/")
-                                                    ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
-                                                    : movie.poster_path
-                                            }
-                                            className={cx("card-image")}
-                                            // style={{width: '150px', height: '250px'}}
-                                        />
-                                        {movie.vote_average_user !== 0 && (
-                                            <div className={cx("user-score")}>
-                                                <CircularProgressBarVote
-                                                    value={movie.vote_average_user * 10}
-                                                    text={`${movie.vote_average_user * 10}%`}
-                                                    // className={cx('me-3', 'user-score-percent')}
+                                            <h2 className={'mt-5'}>
+                                                Rate
+                                            </h2>
+                                            <div>
+                                                <ReactStars
+                                                    size={50}
+                                                    count={10}
+                                                    isHalf={false}
+                                                    emptyIcon={<AiFillStar/>}
+                                                    fullIcon={<AiFillStar/>}
+                                                    onChange={ratingChanged}
+                                                    value={userRating}
+                                                    activeColor="#ffd700"
                                                 />
                                             </div>
-                                        )}
-                                        <Card.Body className="d-flex flex-column justify-content-between mt-2 mb-2">
-                                            <NavLink to={`/movie/${movie._id}`}>
-                                                <Card.Title className={cx("card-title")}>
-                                                    {movie.title}
-                                                </Card.Title>
-                                            </NavLink>
-                                            <Card.Text className={cx("mb-4", "card-text")}>
-                                                {movie.overview}
-                                            </Card.Text>
-                                            <div className="text-center">
-                                                <NavLink to={`/movie/${movie._id}`}>
-                                                    <Button variant="primary" size="lg">
-                                                        Xem chi tiết
-                                                    </Button>
-                                                </NavLink>
-                                            </div>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </div>
                     </div>
-                )}
+                </div>
+
+                <div className={cx('featured-movies')}>
+                    <button className={cx('featured-movies-title')}>
+                        <h2>Phim nổi bật</h2>
+                    </button>
+                    {featuredMovies.length > 0 && (
+                        <div className={cx("card-movie")}>
+                            <Row xs={1} md={2} lg={4} className="g-4 mb-10 mt-10">
+                                {featuredMovies.map((movie) => (
+                                    <Col key={movie._id} className={cx("col-movie")}>
+                                        <Card className={cx("custom-card")}>
+                                            <Card.Img
+                                                variant="top"
+                                                src={
+                                                    movie.poster_path.startsWith("/")
+                                                        ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`
+                                                        : movie.poster_path
+                                                }
+                                                className={cx("card-image")}
+                                                // style={{width: '150px', height: '250px'}}
+                                            />
+                                            {movie.vote_average_user !== 0 && (
+                                                <div className={cx("user-score")}>
+                                                    <CircularProgressBarVote
+                                                        value={movie.vote_average_user * 10}
+                                                        text={`${movie.vote_average_user * 10}%`}
+                                                        // className={cx('me-3', 'user-score-percent')}
+                                                    />
+                                                </div>
+                                            )}
+                                            <Card.Body className="d-flex flex-column justify-content-between mt-2 mb-2">
+                                                <NavLink to={`/movie/${movie._id}`}>
+                                                    <Card.Title className={cx("card-title")}>
+                                                        {movie.title}
+                                                    </Card.Title>
+                                                </NavLink>
+                                                <Card.Text className={cx("mb-4", "card-text")}>
+                                                    {movie.overview}
+                                                </Card.Text>
+                                                <div className="text-center">
+                                                    <NavLink to={`/movie/${movie._id}`}>
+                                                        <Button variant="primary" size="lg">
+                                                            Xem chi tiết
+                                                        </Button>
+                                                    </NavLink>
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <ToastContainer/>

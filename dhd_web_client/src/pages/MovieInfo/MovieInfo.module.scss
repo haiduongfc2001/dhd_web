@@ -160,7 +160,13 @@ section.images > div.poster_wrapper {
 
 .featured-movies {
   padding: 10px var(--default-padding);
-  background-color: #f9fafb;
+  background-color: #c8cbcb;
+
+  .featured-movies-title {
+    background-color: #18e21b;
+    border-radius: calc(var(--default-border-radius) / 2);
+    padding: 2px 5px;
+  }
 
   .card-movie {
     //background-color: rebeccapurple;
