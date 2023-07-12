@@ -1,236 +1,241 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
-    MDBBtn,
-    MDBContainer,
-    MDBRow,
-    MDBCol,
-    MDBCard,
-    MDBCardBody,
-    MDBInput,
-}
-    from 'mdb-react-ui-kit';
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+} from "mdb-react-ui-kit";
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
-import {Link, NavLink, useNavigate} from "react-router-dom";
-import {AuthContext} from "~/context/AuthContext";
-import {toast, ToastContainer} from "react-toastify";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "~/context/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 import usePasswordToggle from "~/hooks/usePasswordToggle";
 
 import classNames from "classnames/bind";
 import styles from "./SignIn.module.scss";
 import api from "~/api/api";
 import Header from "~/components/Layout/components/Header";
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 
 function SignIn() {
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
 
-    const { setIsLoggedIn, setUser } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const [PasswordInputType, PasswordToggleIcon, togglePasswordVisibility] =
+    usePasswordToggle();
+  // const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
 
-    const [PasswordInputType, PasswordToggleIcon, togglePasswordVisibility] = usePasswordToggle();
-    // const [PasswordInputType, ToggleIcon, toggleVisibility] = usePasswordToggle();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [notificationMessage, setNotificationMessage] = useState('');
+  useEffect(() => {
+    setErrorMessage("");
+  }, [email, password]);
 
-    useEffect(() => {
-        setErrorMessage('');
-    }, [email, password]);
+  useEffect(() => {
+    setErrorMessage("");
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      navigate("/");
+    }
+  }, [setIsLoggedIn, navigate]);
 
-    useEffect(() => {
-        setErrorMessage('');
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-            navigate('/');
-        }
-    }, [setIsLoggedIn, navigate]);
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    if (!email) {
+      await setErrorMessage("Xin vui lòng nhập email của bạn!");
+      return;
+    }
+    if (!password) {
+      await setErrorMessage("Xin vui lòng nhập mật khẩu của bạn!");
+      return;
+    }
 
-        if (!email) {
-            await setErrorMessage('Xin vui lòng nhập email của bạn!');
-            return;
-        }
-        if (!password) {
-            await setErrorMessage('Xin vui lòng nhập mật khẩu của bạn!');
-            return;
-        }
+    try {
+      const response = await api.post("/login", {
+        email,
+        password,
+      });
 
-        try {
+      const { token, user_id } = response.data;
+      // Save the token to local storage
+      localStorage.setItem("token", token);
 
-            const response = await api.post('/login', {
-                email,
-                password,
-            });
+      localStorage.setItem("user_id", user_id);
 
-            const { token, user_id } = response.data;
-            // Save the token to local storage
-            localStorage.setItem('token', token);
+      setIsLoggedIn(true);
 
-            localStorage.setItem('user_id', user_id);
+      if (user_id) {
+        api
+          .get(`/user/${user_id}`)
+          .then((response) => {
+            setUser(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
-            setIsLoggedIn(true);
+      // setEmail('');
+      // setPassword('');
+      // setSuccess(true);
 
-            if (user_id) {
-                api.get(`/user/${user_id}`)
-                    .then((response) => {
-                        setUser(response.data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
+      navigate("/");
+      toast.success("Logged in successfully!", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Login Failed!");
+      }
+      toast.error("Login Failed!", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
-            // setEmail('');
-            // setPassword('');
-            // setSuccess(true);
+  return (
+    <div className={cx("wrapper")}>
+      <Header />
 
-            navigate('/');
-            toast.success('Logged in successfully!', {
-                position: "bottom-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            })
+      <MDBContainer fluid className={cx("signin-form")}>
+        <MDBRow className="d-flex justify-content-center align-items-center h-100">
+          <MDBCol col="12">
+            <MDBCard
+              className="bg-light text-black my-5 mx-auto"
+              style={{ borderRadius: "1rem", maxWidth: "400px" }}
+            >
+              <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
+                {/*<h2 className="fw-bold mb-2 text-uppercase">Login</h2>*/}
+                <img
+                  src={logoDHD}
+                  alt="logo dhd"
+                  className={cx("logo-admin")}
+                />
+                <p className="text-black-150 mt-3 mb-5">
+                  Vui lòng đăng nhập bằng tài khoản của bạn!
+                </p>
 
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                setErrorMessage(error.response.data.message);
-            } else {
-                setErrorMessage('Login Failed!');
-            }
-            toast.error('Login Failed!', {
-                position: "bottom-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            })
-        }
-    };
+                <MDBInput
+                  wrapperClass="mb-4 mx-5 w-100"
+                  labelClass="text-black"
+                  label={
+                    <>
+                      Email{" "}
+                      <span
+                        style={{ color: "red" }}
+                        dangerouslySetInnerHTML={{ __html: "*" }}
+                      />
+                    </>
+                  }
+                  type="email"
+                  size="lg"
+                  // style={{maxWidth: '250px'}}
+                  autoFocus
+                  value={email}
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <MDBInput
+                  wrapperClass="mb-4 mx-5 w-100"
+                  labelClass="text-black"
+                  label={
+                    <>
+                      Mật khẩu{" "}
+                      <span
+                        style={{ color: "red" }}
+                        dangerouslySetInnerHTML={{ __html: "*" }}
+                      />
+                    </>
+                  }
+                  type={PasswordInputType}
+                  size="lg"
+                  value={password}
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                >
+                  {password && (
+                    <span
+                      className={cx("password-toggle-icon")}
+                      onClick={togglePasswordVisibility}
+                    >
+                      {PasswordToggleIcon}
+                    </span>
+                  )}
+                </MDBInput>
 
-    return (
-        <div className={cx('wrapper')}>
-            <Header />
+                {/*<p ref={errRef} className={errMsg ? "errmsg text-danger" : "offscreen"} aria-live="assertive">{errMsg}</p>*/}
 
-            <MDBContainer fluid className={cx('signin-form')}>
-                <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-                    <MDBCol col='12'>
-                        <MDBCard className='bg-light text-black my-5 mx-auto'
-                                 style={{borderRadius: '1rem', maxWidth: '400px'}}>
-                            <MDBCardBody className='p-5 d-flex flex-column align-items-center mx-auto w-100'>
-                                {/*<h2 className="fw-bold mb-2 text-uppercase">Login</h2>*/}
-                                <img
-                                    src={logoDHD}
-                                    alt="logo dhd"
-                                    className={cx('logo-admin')}
-                                />
-                                <p className="text-black-150 mt-3 mb-5">
-                                    Vui lòng đăng nhập bằng tài khoản của bạn!
-                                </p>
+                {/*{error && <p className='text-danger'>{error}</p>}*/}
+                {errorMessage && (
+                  <p className={"text-danger"}>{errorMessage}</p>
+                )}
+                {notificationMessage && (
+                  <p className={"text-danger"}>{notificationMessage}</p>
+                )}
 
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label={
-                                        <>
-                                            Email{" "}
-                                            <span
-                                                style={{color: "red"}}
-                                                dangerouslySetInnerHTML={{__html: "*"}}
-                                            />
-                                        </>
-                                    }
-                                    type='email'
-                                    size='lg'
-                                    // style={{maxWidth: '250px'}}
-                                    autoFocus
-                                    value={email}
-                                    required
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <MDBInput
-                                    wrapperClass='mb-4 mx-5 w-100'
-                                    labelClass='text-black'
-                                    label={
-                                        <>
-                                            Mật khẩu{" "}
-                                            <span
-                                                style={{color: "red"}}
-                                                dangerouslySetInnerHTML={{__html: "*"}}
-                                            />
-                                        </>
-                                    }
-                                    type={PasswordInputType}
-                                    size='lg'
-                                    value={password}
-                                    required
-                                    onChange={(e) => setPassword(e.target.value)}
-                                >
-                                    {password && (
-                                        <span
-                                            className={cx('password-toggle-icon')}
-                                            onClick={togglePasswordVisibility}
-                                        >
-                                            {PasswordToggleIcon}
-                                        </span>
-                                    )}
-                                </MDBInput>
+                <p className="small mb-3 pb-lg-2">
+                  <NavLink className="text-black-100" to="/forgot-password">
+                    Quên mật khẩu
+                  </NavLink>
+                </p>
 
-                                {/*<p ref={errRef} className={errMsg ? "errmsg text-danger" : "offscreen"} aria-live="assertive">{errMsg}</p>*/}
+                <MDBBtn
+                  className="mx-2 px-5 text-black"
+                  color="red"
+                  size="lg"
+                  style={{ backgroundColor: "#a69c9c", fontWeight: "600" }}
+                  onClick={handleLogin}
+                >
+                  Đăng nhập
+                </MDBBtn>
 
-                                {/*{error && <p className='text-danger'>{error}</p>}*/}
-                                {errorMessage && <p className={'text-danger'}>{errorMessage}</p>}
-                                {notificationMessage && <p className={'text-danger'}>{notificationMessage}</p>}
+                <div className="mt-2">
+                  <p className="mb-0 mt-2">
+                    Bạn chưa có tài khoản
+                    <Link to="/register" className="text-black-50 fw-bold ms-1">
+                      Đăng ký
+                    </Link>
+                  </p>
+                </div>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
-                                <p className='small mb-3 pb-lg-2'>
-                                    <NavLink
-                                        className='text-black-100'
-                                             to='/forgot-password'
-                                    >
-                                        Quên mật khẩu
-                                    </NavLink>
-                                </p>
-
-                                <MDBBtn
-                                    className='mx-2 px-5 text-black'
-                                    color='red'
-                                    size='lg'
-                                    style={{backgroundColor: '#a69c9c', fontWeight: '600'}}
-                                    onClick={handleLogin}
-                                >
-                                    Đăng nhập
-                                </MDBBtn>
-
-                                <div className='mt-2'>
-                                    <p className="mb-0 mt-2">Bạn chưa có tài khoản
-                                        <Link to="/register" className="text-black-50 fw-bold ms-1">
-                                            Đăng ký
-                                        </Link>
-                                    </p>
-                                </div>
-
-                            </MDBCardBody>
-                        </MDBCard>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
-
-            <ToastContainer/>
-        </div>
-    );
+      <ToastContainer />
+    </div>
+  );
 }
 
 export default SignIn;
