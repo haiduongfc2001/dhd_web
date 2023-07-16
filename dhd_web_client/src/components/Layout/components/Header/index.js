@@ -129,11 +129,15 @@ function Header(props) {
           </div>
         </Tippy>
 
-        {user.image !== undefined && isLoggedIn === true && (
+        {isLoggedIn === true && (
           <MDBDropdown className="btn-group shadow-0">
             <div className="me-3">
               <Image
-                src={`${api.defaults.baseURL}/userImages/${user.image}`}
+                src={
+                  user.image
+                    ? `${api.defaults.baseURL}/userImages/${user.image}`
+                    : "https://img.freepik.com/free-icon/user_318-563642.jpg?w=360"
+                }
                 alt="avatar"
                 roundedCircle
                 style={{ width: "45px", height: "45px" }}
