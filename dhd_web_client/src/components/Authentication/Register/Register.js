@@ -68,6 +68,14 @@ function Register() {
   const handleRegister = async (event) => {
     event.preventDefault();
 
+    // Tạo formData để gửi dữ liệu và file
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("password", password);
+    formData.append("image", image);
+
     // Kiểm tra xem đã nhập đầy đủ thông tin như name, email, name, password và ảnh đại diện chưa
     if (!name || !email || !password || !phone || !image) {
       setErrorMessage("Xin nhập đầy đủ thông tin!");
@@ -80,23 +88,15 @@ function Register() {
     }
 
     try {
-      const response = await api.post("/register", {
-        name,
-        email,
-        phone,
-        password,
-        image,
-      });
-
-      setErrorMessage(response.data.message);
+      const response = await api.post("/register", formData);
 
       // navigate('/');
 
-      // setName('');
-      // setEmail('');
-      // setPhone('');
-      // setPassword('');
-      // setImage(null);
+      setName("");
+      setEmail("");
+      setPhone("");
+      setPassword("");
+      setImage(null);
       setErrorMessage("");
       setNotificationMessage(response.data.message);
       toast.success("User added successfully!", {
@@ -110,16 +110,18 @@ function Register() {
         theme: "colored",
       });
     } catch (error) {
-      console.log(error.response); // Kiểm tra thông báo lỗi từ API
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage("Error registering user!");
-      }
+      //   if (
+      //     error.response &&
+      //     error.response.data &&
+      //     error.response.data.message
+      //   ) {
+      //     setErrorMessage(error.response.data.message);
+      //   } else {
+      //     setErrorMessage("Error registering user!");
+      //   }
+
+      toast.error("Error adding user!");
+      console.error(error);
     }
   };
 
