@@ -7,7 +7,6 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBRadio,
 } from "mdb-react-ui-kit";
 import logoDHD from "~/assets/images/logo_dhdadmin.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,7 +27,7 @@ function Register() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -61,9 +60,9 @@ function Register() {
     setRepeatPassword(e.target.value);
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+  // const handleImageChange = (e) => {
+  //   setImage(e.target.files[0]);
+  // };
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -96,7 +95,7 @@ function Register() {
       setEmail("");
       setPhone("");
       setPassword("");
-      setImage(null);
+      // setImage(null);
       setErrorMessage("");
       setNotificationMessage(response.data.message);
       toast.success("User added successfully!", {
