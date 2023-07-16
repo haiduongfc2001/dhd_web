@@ -52,11 +52,11 @@ function SignIn() {
     e.preventDefault();
 
     if (!email) {
-      await setErrorMessage("Xin vui lòng nhập email của bạn!");
+      setErrorMessage("Xin vui lòng nhập email của bạn!");
       return;
     }
     if (!password) {
-      await setErrorMessage("Xin vui lòng nhập mật khẩu của bạn!");
+      setErrorMessage("Xin vui lòng nhập mật khẩu của bạn!");
       return;
     }
 
