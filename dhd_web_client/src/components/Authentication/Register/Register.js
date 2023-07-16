@@ -68,11 +68,11 @@ function Register() {
     event.preventDefault();
 
     // Tạo formData để gửi dữ liệu và file
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("password", password);
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("email", email);
+    // formData.append("phone", phone);
+    // formData.append("password", password);
     // formData.append("image", image);
 
     // Kiểm tra xem đã nhập đầy đủ thông tin như name, email, name, password và ảnh đại diện chưa
@@ -87,18 +87,23 @@ function Register() {
     }
 
     try {
-      const response = await api.post("/register", formData);
+      const response = await api.post("/register", {
+        name,
+        email,
+        password,
+        phone,
+      });
 
       // navigate('/');
 
-      setName("");
-      setEmail("");
-      setPhone("");
-      setPassword("");
+      // setName("");
+      // setEmail("");
+      // setPhone("");
+      // setPassword("");
       // setImage(null);
       setErrorMessage("");
       setNotificationMessage(response.data.message);
-      toast.success("User added successfully!", {
+      toast.success("Bạn đã đăng ký tài khoản thành công!", {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -270,7 +275,7 @@ function Register() {
                   <p className={"text-danger"}>{errorMessage}</p>
                 )}
                 {notificationMessage && (
-                  <p className={"text-danger"}>{notificationMessage}</p>
+                  <p className={"text-success"}>{notificationMessage}</p>
                 )}
 
                 <div>
