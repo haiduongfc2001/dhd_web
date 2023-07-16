@@ -118,7 +118,7 @@ function Register() {
       //   } else {
       //     setErrorMessage("Error registering user!");
       //   }
-
+      setErrorMessage(error.message);
       toast.error("Error adding user!");
       console.error(error);
     }
