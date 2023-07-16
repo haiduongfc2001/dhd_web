@@ -74,10 +74,10 @@ function Register() {
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("password", password);
-    formData.append("image", image);
+    // formData.append("image", image);
 
     // Kiểm tra xem đã nhập đầy đủ thông tin như name, email, name, password và ảnh đại diện chưa
-    if (!name || !email || !password || !phone || !image) {
+    if (!name || !email || !password || !phone) {
       setErrorMessage("Xin nhập đầy đủ thông tin!");
       return;
     }
@@ -205,20 +205,20 @@ function Register() {
       toggleVisibility: toggleRepeatPasswordVisibility,
       toggleIcon: RepeatPasswordToggleIcon,
     },
-    {
-      id: "image",
-      type: "file",
-      label: (
-        <>
-          Ảnh đại diện{" "}
-          <span
-            style={{ color: "red" }}
-            dangerouslySetInnerHTML={{ __html: "*" }}
-          />
-        </>
-      ),
-      onChange: handleImageChange,
-    },
+    // {
+    //   id: "image",
+    //   type: "file",
+    //   label: (
+    //     <>
+    //       Ảnh đại diện{" "}
+    //       <span
+    //         style={{ color: "red" }}
+    //         dangerouslySetInnerHTML={{ __html: "*" }}
+    //       />
+    //     </>
+    //   ),
+    //   onChange: handleImageChange,
+    // },
   ];
 
   return (
