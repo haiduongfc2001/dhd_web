@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import api from "~/api/api";
 import Button from "react-bootstrap/Button";
 
@@ -23,6 +23,14 @@ function MovieInfo() {
   const [movie, setMovie] = useState(null);
   const [userRating, setUserRating] = useState(0);
   const [featuredMovies, setFeaturedMovies] = useState([]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Thực hiện cuộn trang đến đầu trang khi chuyển trang
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     api.get("/movies").then((response) => {
@@ -266,13 +274,13 @@ function MovieInfo() {
                         <Card.Text className={cx("mb-4", "card-text")}>
                           {movie.overview}
                         </Card.Text>
-                        <div className="text-center">
+                        {/* <div className="text-center">
                           <NavLink to={`/movie/${movie._id}`}>
                             <Button variant="primary" size="lg">
                               Xem chi tiết
                             </Button>
                           </NavLink>
-                        </div>
+                        </div> */}
                       </Card.Body>
                     </Card>
                   </Col>
