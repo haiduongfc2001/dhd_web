@@ -68,6 +68,16 @@ const Profile = () => {
       });
       setIsImageUpdated(true);
       setImageName(""); // Xóa tên ảnh sau khi cập nhật thành công
+      toast.success("Cập nhật ảnh thành công!", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } catch (e) {
       setErrorMessage(e.response.data.message);
     }
