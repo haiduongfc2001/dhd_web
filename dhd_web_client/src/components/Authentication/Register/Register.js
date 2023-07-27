@@ -20,14 +20,11 @@ import Header from "~/components/Layout/components/Header";
 const cx = classNames.bind(styles);
 
 function Register() {
-  const navigate = useNavigate();
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  // const [image, setImage] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -60,24 +57,28 @@ function Register() {
     setRepeatPassword(e.target.value);
   };
 
-  // const handleImageChange = (e) => {
-  //   setImage(e.target.files[0]);
-  // };
-
   const handleRegister = async (event) => {
     event.preventDefault();
-
-    // Tạo formData để gửi dữ liệu và file
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("email", email);
-    // formData.append("phone", phone);
-    // formData.append("password", password);
-    // formData.append("image", image);
 
     // Kiểm tra xem đã nhập đầy đủ thông tin như name, email, name, password và ảnh đại diện chưa
     if (!name || !email || !password || !phone) {
       setErrorMessage("Xin nhập đầy đủ thông tin!");
+      return;
+    }
+
+    // Validate phone: số điện thoại phải gồm 10 chữ số, không được chưa ký tự nào khác ngoài số
+    const phoneRegex = /^\d{10}$/;
+    if (!phone.match(phoneRegex)) {
+      setErrorMessage("Số điện thoại phải gồm 10 số");
+      return;
+    }
+
+    // Validate password: mật khẩu phải có ít nhất 6 kí tự, gồm chữ hoa chữ thường và số
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    if (!password.match(passwordRegex)) {
+      setErrorMessage(
+        "Mật khẩu phải chứa ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường và số."
+      );
       return;
     }
 
@@ -86,6 +87,8 @@ function Register() {
       return;
     }
 
+    setErrorMessage("");
+
     try {
       const response = await api.post("/register", {
         name,
@@ -93,14 +96,6 @@ function Register() {
         password,
         phone,
       });
-
-      // navigate('/');
-
-      // setName("");
-      // setEmail("");
-      // setPhone("");
-      // setPassword("");
-      // setImage(null);
       setErrorMessage("");
       setNotificationMessage(response.data.message);
       toast.success("Bạn đã đăng ký tài khoản thành công!", {
@@ -114,15 +109,6 @@ function Register() {
         theme: "colored",
       });
     } catch (error) {
-      //   if (
-      //     error.response &&
-      //     error.response.data &&
-      //     error.response.data.message
-      //   ) {
-      //     setErrorMessage(error.response.data.message);
-      //   } else {
-      //     setErrorMessage("Error registering user!");
-      //   }
       setErrorMessage(error.message);
       toast.error("Error adding user!");
       console.error(error);
@@ -209,20 +195,6 @@ function Register() {
       toggleVisibility: toggleRepeatPasswordVisibility,
       toggleIcon: RepeatPasswordToggleIcon,
     },
-    // {
-    //   id: "image",
-    //   type: "file",
-    //   label: (
-    //     <>
-    //       Ảnh đại diện{" "}
-    //       <span
-    //         style={{ color: "red" }}
-    //         dangerouslySetInnerHTML={{ __html: "*" }}
-    //       />
-    //     </>
-    //   ),
-    //   onChange: handleImageChange,
-    // },
   ];
 
   return (
@@ -237,7 +209,6 @@ function Register() {
               style={{ borderRadius: "1rem", maxWidth: "400px" }}
             >
               <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
-                {/*<h2 className="fw-bold mb-2 text-uppercase">Login</h2>*/}
                 <img
                   src={logoDHD}
                   alt="logo dhd"
@@ -258,6 +229,7 @@ function Register() {
                     value={form.value}
                     onChange={form.onChange}
                     autoFocus={form.id === "name"}
+                    maxLength={form.id === "phone" ? 10 : undefined}
                   >
                     {((form.id === "password" && password) ||
                       (form.id === "repeat-password" && repeatPassword)) && (
