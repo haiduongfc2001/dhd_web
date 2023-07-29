@@ -109,8 +109,15 @@ function Register() {
         theme: "colored",
       });
     } catch (error) {
-      setErrorMessage(error.message);
-      toast.error("Error adding user!");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Server error");
+      }
       console.error(error);
     }
   };
